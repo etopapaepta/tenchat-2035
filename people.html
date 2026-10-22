@@ -105,6 +105,39 @@
 </footer>
 
 <script>
+  // Типографика: короткие слова и числа не висят в конце строки, тире не переносится в начало
+  (function () {
+    var SKIP = { SCRIPT: 1, STYLE: 1, TEXTAREA: 1, INPUT: 1, CODE: 1 };
+    // после короткого слова — только обычный пробел: \s в JS ловит и неразрывный
+    var SHORT = /(^|[\s(«"—–])([А-Яа-яЁёA-Za-z]{1,2}|\d+)[ \t\n\r]+(?=[^\s—–])/g;
+    function fix(t) {
+      for (var i = 0; i < 4; i++) {
+        var next = t.replace(SHORT, "$1$2\u00A0");
+        if (next === t) break;
+        t = next;
+      }
+      return t.replace(/[ \t\n\r]+([—–])(?=\s)/g, "\u00A0$1");
+    }
+    function fixNode(n) {
+      if (!n.parentNode || SKIP[n.parentNode.nodeName]) return;
+      var v = fix(n.nodeValue);
+      if (v !== n.nodeValue) n.nodeValue = v;
+    }
+    function walk(root) {
+      if (root.nodeType === 3) return fixNode(root);
+      if (root.nodeType !== 1 || SKIP[root.nodeName]) return;
+      var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null), n, list = [];
+      while ((n = w.nextNode())) list.push(n);
+      list.forEach(fixNode);
+    }
+    walk(document.body);
+    new MutationObserver(function (ms) {
+      ms.forEach(function (m) { m.addedNodes.forEach(walk); });
+    }).observe(document.body, { childList: true, subtree: true });
+  })();
+</script>
+
+<script>
   var BOT = "https://t.me/Tenchat2035bot";
   var PAGE = 24;
   var TINT = {
