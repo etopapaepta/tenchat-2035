@@ -349,8 +349,11 @@
   }
   function personCard(p) {
     var d = document.createElement("div");
+    var id = Number(p.id);
+    var avatar = Number.isInteger(id) && id > 0 ? "avatars/person-" + String(id).padStart(3, "0") + ".jpg" : "";
     d.className = "max-w-[92%] rounded-2xl rounded-bl-md border border-match/40 bg-white p-3 shadow-sm fade-swap";
-    d.innerHTML = '<div class="flex items-center gap-2.5"><span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-paper text-xl">' + esc(p.emoji || "👤") + '</span>' +
+    d.innerHTML = '<div class="flex items-center gap-2.5"><span class="relative grid h-14 w-14 shrink-0 place-items-center overflow-hidden rounded-2xl bg-paper text-2xl"><span aria-hidden="true">' + esc(p.emoji || "👤") + '</span>' +
+      (avatar ? '<img src="' + esc(avatar) + '" alt="ИИ-портрет: ' + esc(p.name) + '" width="56" height="56" decoding="async" class="absolute inset-0 h-full w-full object-cover" onerror="this.remove()">' : '') + '</span>' +
       '<div class="min-w-0"><div class="font-semibold text-ink">' + esc(p.name) + '</div><div class="text-xs text-mute">' + esc(p.role) + '</div></div></div>' +
       '<div class="mt-2 text-xs text-ink/70">🔍 Ищет: ' + esc(p.looking) + '</div>' +
       '<a href="' + BOT_URL + '" target="_blank" rel="noopener" class="mt-2.5 flex items-center justify-center gap-1.5 rounded-xl bg-brand-soft py-2 text-xs font-semibold text-brand hover:bg-brand hover:text-white">🤝 Познакомиться через бота</a>';
