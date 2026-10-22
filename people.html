@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Люди в боте · Tenchat2035</title>
-<meta name="description" content="191 профиль в 17 сферах, с которыми ИИ-агент Tenchat2035 знакомит прямо сейчас. Найдите человека и познакомьтесь через ИИ.">
+<meta name="description" content="100 человек в 17 сферах, с которыми ИИ-агент Tenchat2035 знакомит прямо сейчас. Найдите человека и познакомьтесь через ИИ.">
 <link rel="icon" type="image/png" href="logo-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,13 +19,13 @@
           sans: ["Inter", "system-ui", "-apple-system", "Segoe UI", "Roboto", "sans-serif"],
         },
         colors: {
-          ink: "#0D1530",
-          mute: "#3B4563",
-          line: "#E2E8F6",
-          paper: "#F5F8FF",
-          brand: { DEFAULT: "#2B5CF2", dark: "#1D43C9", soft: "#E8EEFF" },
-          aqua: { DEFAULT: "#18C2F2", soft: "#E3F8FE" },
-          violet: "#6D5DF5",
+          ink: "#1F2433",
+          mute: "#4B5163",
+          line: "#E9EBF0",
+          paper: "#F5F6F8",
+          brand: { DEFAULT: "#EB2A2A", dark: "#C81E1E", soft: "#FDECEC" },
+          aqua: { DEFAULT: "#FF6B5E", soft: "#FFF1EE" },
+          violet: "#8E1B3A",
           match: "#10B981",
         },
       },
@@ -34,17 +34,25 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <style>
-  body { background: #F5F8FF; color: #0D1530; font-weight: 500; }
-  .card { background: rgba(255,255,255,.86); border: 1px solid #E2E8F6; box-shadow: 0 12px 34px -20px rgba(29,67,201,.28); transition: border-color .25s, box-shadow .25s, transform .25s; }
-  .card:hover { border-color: rgba(43,92,242,.45); box-shadow: 0 18px 40px -18px rgba(43,92,242,.4); transform: translateY(-2px); }
-  .btn-blue { background: linear-gradient(100deg, #2B5CF2, #18C2F2); color: #fff; box-shadow: 0 10px 26px -10px rgba(43,92,242,.7); transition: transform .2s; }
-  .btn-blue:hover { transform: translateY(-1px); }
-  .chip { border: 1px solid #E2E8F6; background: #fff; color: #0D1530; }
-  .chip.on { background: #0D1530; border-color: #0D1530; color: #fff; }
+  body { background: #FFFFFF; color: #1F2433; font-weight: 500; }
+  .card { background: rgba(255,255,255,.86); border: 1px solid #EEE6E6; box-shadow: 0 12px 34px -20px rgba(140,20,25,.22); transition: border-color .25s, box-shadow .25s, transform .25s; }
+  .card:hover { border-color: rgba(229,38,43,.45); box-shadow: 0 18px 40px -18px rgba(229,38,43,.4); transform: translateY(-2px); }
+  .btn-blue { background: #EB2A2A; color: #fff; transition: background .2s; }
+  .btn-blue:hover { background: #D81F1F; }
+  .chip { border: 1px solid #EEE6E6; background: #fff; color: #131316; }
+  .chip.on { background: #EB2A2A; border-color: #EB2A2A; color: #fff; }
   .chips { scrollbar-width: none; } .chips::-webkit-scrollbar { display: none; }
   .pop { animation: pop .35s ease both; }
   @keyframes pop { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
   @media (prefers-reduced-motion: reduce) { .pop { animation: none; } .card:hover { transform: none; } }
+
+  /* 2035: логотип в красной гамме TenChat, техно-сетка, свечение */
+  img[src^="logo-"] { filter: hue-rotate(135deg) saturate(1.15); }
+  .grid35 { background-image: linear-gradient(rgba(229,38,43,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(229,38,43,.07) 1px, transparent 1px); background-size: 44px 44px; mask-image: radial-gradient(ellipse at 60% 25%, #000 20%, transparent 72%); -webkit-mask-image: radial-gradient(ellipse at 60% 25%, #000 20%, transparent 72%); }
+  .text-grad { background-size: 200% 100%; animation: holo 7s ease-in-out infinite; }
+  @keyframes holo { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+  .card { box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 14px 36px -22px rgba(140,20,25,.35); }
+  @media (prefers-reduced-motion: reduce) { .text-grad { animation: none; } }
 </style>
 </head>
 <body class="font-sans antialiased overflow-x-hidden">
@@ -69,12 +77,12 @@
   <section class="grid items-end gap-6 lg:grid-cols-[1.3fr_.7fr]">
     <div>
       <span class="inline-flex items-center gap-2 rounded-full border border-line bg-white px-3 py-1.5 text-xs font-semibold text-mute"><span class="h-2 w-2 rounded-full bg-match"></span>База ИИ-подбора · демо-профили</span>
-      <h1 class="mt-4 font-display text-[34px] font-extrabold leading-tight sm:text-5xl">Люди, с которыми <span class="bg-gradient-to-r from-brand to-aqua bg-clip-text text-transparent">ИИ знакомит прямо сейчас</span></h1>
+      <h1 class="mt-4 font-display text-[34px] font-extrabold leading-tight sm:text-5xl">Люди, с которыми <span class="text-brand">ИИ знакомит прямо сейчас</span></h1>
       <p class="mt-3 max-w-2xl text-lg text-mute">Каждый из них сам ищет деловые знакомства. Найдите своего человека — ИИ объяснит, зачем вам встретиться, и напишет первым. Профили вымышленные: так функция будет работать на реальных профилях TenChat.</p>
     </div>
     <div class="grid grid-cols-3 gap-3">
-      <div class="card rounded-2xl p-4"><div id="statTotal" class="font-display text-3xl font-extrabold text-brand">191</div><div class="text-sm text-mute">профиль</div></div>
-      <div class="card rounded-2xl p-4"><div class="font-display text-3xl font-extrabold text-[#0EA5D0]">17</div><div class="text-sm text-mute">сфер</div></div>
+      <div class="card rounded-2xl p-4"><div id="statTotal" class="font-display text-3xl font-extrabold text-brand">100</div><div class="text-sm text-mute">человек</div></div>
+      <div class="card rounded-2xl p-4"><div class="font-display text-3xl font-extrabold text-[#D9432F]">17</div><div class="text-sm text-mute">сфер</div></div>
       <div class="card rounded-2xl p-4"><div id="statTeam" class="font-display text-3xl font-extrabold text-violet">0</div><div class="text-sm text-mute">собирают команду</div></div>
     </div>
   </section>
@@ -141,10 +149,10 @@
   var BOT = "https://t.me/Tenchat2035bot";
   var PAGE = 24;
   var TINT = {
-    education: ["#E8EEFF", "#2B5CF2"], psy: ["#EEEBFF", "#6D5DF5"], health: ["#E6F8F1", "#10B981"], it: ["#E3F8FE", "#0EA5D0"],
-    design: ["#FDEBF4", "#D9468F"], marketing: ["#FFF3E3", "#E0820B"], media: ["#EEEBFF", "#6D5DF5"], finance: ["#E6F8F1", "#0F9F6E"],
-    law: ["#E8EEFF", "#1D43C9"], hr: ["#FFF3E3", "#C76E06"], science: ["#E3F8FE", "#0B8FB8"], industry: ["#EEF1F6", "#4A5670"],
-    build: ["#FFF0E8", "#D35A1E"], creative: ["#FDEBF4", "#C23B7E"], sport: ["#E6F8F1", "#0F9F6E"], services: ["#FFF3E3", "#C76E06"], gov: ["#E8EEFF", "#2B5CF2"]
+    education: ["#FDECEC", "#E5262B"], psy: ["#F8E9EE", "#8E1B3A"], health: ["#E6F8F1", "#10B981"], it: ["#FFF1EE", "#D9432F"],
+    design: ["#FDEBF4", "#D9468F"], marketing: ["#FFF3E3", "#E0820B"], media: ["#F8E9EE", "#8E1B3A"], finance: ["#E6F8F1", "#0F9F6E"],
+    law: ["#FDECEC", "#B3141C"], hr: ["#FFF3E3", "#C76E06"], science: ["#FFF1EE", "#C9362A"], industry: ["#F3EFEF", "#55525A"],
+    build: ["#FFF0E8", "#D35A1E"], creative: ["#FDEBF4", "#C23B7E"], sport: ["#E6F8F1", "#0F9F6E"], services: ["#FFF3E3", "#C76E06"], gov: ["#FDECEC", "#E5262B"]
   };
   var data, list = [], shown = 0, sphere = "", status = "";
 

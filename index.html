@@ -3,505 +3,185 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tenchat2035 · AI Networking</title>
-<meta name="description" content="ИИ-функция TenChat 2035 для деловых знакомств: ИИ сам находит людей по вашим целям, объясняет взаимную выгоду и запускает диалог. Кейс №1, Всероссийский ИИ-хакатон МЭШ 2026.">
+<title>Tenchat2035 · ИИ-знакомства по делу</title>
+<meta name="description" content="ИИ-функция TenChat 2035 для деловых знакомств: ИИ сам находит людей по вашим целям, объясняет взаимную выгоду и пишет первым. Кейс №1, ИИ-хакатон МЭШ 2026.">
 <link rel="icon" type="image/png" href="logo-icon.png">
 <link rel="apple-touch-icon" href="logo-icon.png">
 <meta property="og:image" content="logo-full.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com/3.4.16"></script>
 <script>
   tailwind.config = {
     theme: {
       extend: {
         fontFamily: {
-          display: ["Manrope", "system-ui", "sans-serif"],
+          display: ["Inter", "system-ui", "sans-serif"],
           sans: ["Inter", "system-ui", "-apple-system", "Segoe UI", "Roboto", "sans-serif"],
         },
         colors: {
-          ink: "#0D1530",
-          mute: "#3B4563",
-          line: "#E2E8F6",
-          paper: "#F5F8FF",
-          brand: { DEFAULT: "#2B5CF2", dark: "#1D43C9", soft: "#E8EEFF" },
-          aqua: { DEFAULT: "#18C2F2", soft: "#E3F8FE" },
-          violet: "#6D5DF5",
+          ink: "#1F2433",
+          mute: "#4B5163",
+          line: "#E9EBF0",
+          paper: "#F5F6F8",
+          slate: "#2B3242",
+          brand: { DEFAULT: "#EB2A2A", dark: "#C81E1E", soft: "#FDECEC" },
+          aqua: { DEFAULT: "#FF6B5E", soft: "#FFF1EE" },
+          violet: "#8E1B3A",
           match: "#10B981",
         },
-        keyframes: {
-          floaty: { "0%,100%": { transform: "translate(0,0) scale(1)" }, "50%": { transform: "translate(30px,-20px) scale(1.06)" } },
-          ping2: { "0%": { transform: "scale(1)", opacity: ".7" }, "100%": { transform: "scale(2.4)", opacity: "0" } },
-          shimmer: { "0%": { backgroundPosition: "-200% 0" }, "100%": { backgroundPosition: "200% 0" } },
-        },
-        animation: {
-          floaty: "floaty 16s ease-in-out infinite",
-          ping2: "ping2 1.8s cubic-bezier(0,0,.2,1) infinite",
-          shimmer: "shimmer 1.6s linear infinite",
-        },
+        keyframes: { ping2: { "0%": { transform: "scale(1)", opacity: ".7" }, "100%": { transform: "scale(2.4)", opacity: "0" } } },
+        animation: { ping2: "ping2 1.8s cubic-bezier(0,0,.2,1) infinite" },
       },
     },
   };
 </script>
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <style>
-  html { scroll-behavior: smooth; scroll-padding-top: 88px; }
-  body { background: #F5F8FF; color: #0D1530; font-weight: 500; }
-  .card { background: rgba(255,255,255,.82); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border: 1px solid #E2E8F6; box-shadow: 0 12px 34px -18px rgba(29,67,201,.28); transition: border-color .3s, box-shadow .3s, transform .3s; }
-  .card-hover:hover { border-color: rgba(43,92,242,.45); box-shadow: 0 20px 44px -18px rgba(43,92,242,.45); transform: translateY(-3px); }
-  .text-grad { background: linear-gradient(100deg, #2B5CF2 10%, #18C2F2 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .btn-blue { background: linear-gradient(100deg, #2B5CF2, #18C2F2); color: #fff; box-shadow: 0 12px 30px -10px rgba(43,92,242,.7); transition: transform .2s, box-shadow .2s; }
-  .btn-blue:hover { transform: translateY(-1px); box-shadow: 0 16px 38px -10px rgba(43,92,242,.85); }
-  .btn-light { background: #fff; border: 1px solid #E2E8F6; color: #0D1530; transition: transform .2s, border-color .2s; }
-  .btn-light:hover { transform: translateY(-1px); border-color: rgba(43,92,242,.45); }
-  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .45s ease, transform .45s ease; }
-  .reveal.in { opacity: 1; transform: none; }
-  .dots { background-image: radial-gradient(rgba(43,92,242,.13) 1px, transparent 1px); background-size: 22px 22px; mask-image: radial-gradient(ellipse at 60% 30%, #000 25%, transparent 70%); -webkit-mask-image: radial-gradient(ellipse at 60% 30%, #000 25%, transparent 70%); }
-  .skeleton { background: linear-gradient(90deg, #EDF1FB 0%, #DCE4F7 50%, #EDF1FB 100%); background-size: 200% 100%; }
-  .tab-active { background: linear-gradient(100deg, #E8EEFF, #E3F8FE); border-color: rgba(43,92,242,.55) !important; box-shadow: 0 8px 20px -12px rgba(43,92,242,.6); }
-  .fade-swap { animation: fadeSwap .45s ease both; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body { background: #FFFFFF; color: #1F2433; }
+  img[src^="logo-"] { filter: hue-rotate(135deg) saturate(1.15); }
+  .btn-red, .btn-blue { background: #EB2A2A; color: #fff; transition: background .2s, transform .2s; }
+  .btn-red:hover, .btn-blue:hover { background: #D81F1F; }
+  .btn-dark { background: #2B3242; color: #fff; transition: background .2s; }
+  .btn-dark:hover { background: #1F2433; }
+  .box { background: #fff; border: 1px solid #E9EBF0; border-radius: 24px; }
+  .rail { scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .rail::-webkit-scrollbar { display: none; }
+  .rail > * { scroll-snap-align: start; }
+  .pcard { background: radial-gradient(120% 80% at 50% 0%, #3A3F4D 0%, #1F2433 60%, #151821 100%); }
+  .fade-swap { animation: fadeSwap .4s ease both; }
   @keyframes fadeSwap { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
   #agentPanel { transition: opacity .2s ease, transform .2s ease; }
+  #agentPanel.closed { opacity: 0; transform: translateY(12px) scale(.98); pointer-events: none; }
   .teaser { position: relative; animation: teaserIn .35s cubic-bezier(.2,.9,.3,1.2) both; }
   @keyframes teaserIn { from { opacity: 0; transform: translateY(10px) scale(.92); } to { opacity: 1; transform: none; } }
   #agentChips { scrollbar-width: none; } #agentChips::-webkit-scrollbar { display: none; }
-  #agentPanel.closed { opacity: 0; transform: translateY(12px) scale(.98); pointer-events: none; }
-  .typing span { display: inline-block; width: 6px; height: 6px; margin: 0 1.5px; border-radius: 9999px; background: #2B5CF2; animation: blink 1.2s infinite both; }
+  .typing span { display: inline-block; width: 6px; height: 6px; margin: 0 1.5px; border-radius: 9999px; background: #EB2A2A; animation: blink 1.2s infinite both; }
   .typing span:nth-child(2) { animation-delay: .2s; } .typing span:nth-child(3) { animation-delay: .4s; }
   @keyframes blink { 0%, 80%, 100% { opacity: .25; } 40% { opacity: 1; } }
-  @media (prefers-reduced-motion: reduce) {
-    .reveal { opacity: 1; transform: none; transition: none; }
-    .animate-floaty, .animate-ping2, .animate-shimmer, .fade-swap { animation: none !important; }
-    html { scroll-behavior: auto; }
-  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .fade-swap, .teaser, .animate-ping2 { animation: none !important; } }
 </style>
 </head>
 <body class="font-sans antialiased overflow-x-hidden">
 
-<!-- Мягкие цветные пятна на фоне -->
-<div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-  <div class="absolute -top-48 -left-40 h-[560px] w-[560px] rounded-full bg-brand/15 blur-[130px] animate-floaty"></div>
-  <div class="absolute top-1/4 -right-48 h-[520px] w-[520px] rounded-full bg-aqua/20 blur-[130px] animate-floaty" style="animation-delay:-6s"></div>
-  <div class="absolute bottom-0 left-1/4 h-[420px] w-[420px] rounded-full bg-violet/10 blur-[130px] animate-floaty" style="animation-delay:-10s"></div>
-</div>
-
-<!-- НАВИГАЦИЯ -->
-<header class="sticky top-0 z-50 border-b border-line bg-white/75 backdrop-blur-xl">
+<header class="sticky top-0 z-50 border-b border-line bg-white/90 backdrop-blur">
   <div class="mx-auto flex h-[72px] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
-    <a href="#top" class="flex items-center gap-3">
+    <a href="#top" class="flex items-center gap-2.5">
       <img src="logo-icon.png" alt="" width="40" height="40" class="h-10 w-10 rounded-xl">
-      <span class="leading-tight">
-        <span class="flex items-center gap-2 font-display text-[17px] font-extrabold tracking-tight">
-          <span><span class="text-ink">Tenchat</span><span class="text-brand">2035</span></span>
-          <span class="hidden rounded-md bg-brand px-1.5 py-0.5 font-sans text-[10px] font-semibold uppercase tracking-wide text-white sm:inline">AI Networking</span>
-        </span>
-        <span class="block text-xs text-mute">Кейс №1 • ИИ-Хакатон МЭШ</span>
-      </span>
+      <span class="text-[20px] font-extrabold tracking-tight text-ink sm:text-[22px]">Tenchat<span class="text-brand">2035</span></span>
     </a>
-    <nav class="hidden items-center gap-5 whitespace-nowrap text-sm font-medium text-mute xl:flex 2xl:gap-7">
-      <a class="hover:text-brand" href="#problem">Проблема</a>
-      <a class="hover:text-brand" href="#steps">4 шага</a>
+    <nav class="hidden items-center gap-8 text-[15px] font-medium text-ink lg:flex">
+      <a class="hover:text-brand" href="#how">Как работает</a>
+      <a class="hover:text-brand" href="people.html">Люди в боте</a>
       <a class="hover:text-brand" href="#unique">Отличия</a>
-      <a class="hover:text-brand" href="#demo">Демо</a>
-      <a class="hover:text-brand" href="#trust">Доверие</a>
-      <a class="hover:text-brand" href="#effect">Эффект</a>
       <a class="hover:text-brand" href="#team">Команда</a>
-      <a class="inline-flex items-center gap-1.5 rounded-lg bg-brand-soft px-2.5 py-1 font-semibold text-brand hover:bg-brand hover:text-white" href="people.html"><span class="h-1.5 w-1.5 rounded-full bg-match"></span>Люди в боте</a>
-      <a class="hover:text-brand" href="#faq">Вопросы</a>
     </nav>
     <div class="flex items-center gap-2">
-      <button type="button" data-open-agent class="btn-light hidden items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-semibold 2xl:inline-flex">
-        <i data-lucide="sparkles" class="h-4 w-4 text-brand"></i>ИИ-агент
-      </button>
-      <a href="https://t.me/Tenchat2035bot" target="_blank" rel="noopener" class="btn-blue hidden items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold sm:inline-flex">
-        <i data-lucide="send" class="h-4 w-4"></i>Открыть @Tenchat2035bot
-      </a>
-      <button id="menuBtn" class="grid h-10 w-10 place-items-center rounded-xl border border-line bg-white xl:hidden" aria-label="Меню" aria-expanded="false">
-        <i data-lucide="menu" class="h-5 w-5"></i>
-      </button>
-    </div>
-  </div>
-  <div id="mobileMenu" class="hidden border-t border-line bg-white px-4 pb-4 xl:hidden">
-    <div class="flex flex-col gap-1 pt-3 font-medium text-ink">
-      <a class="rounded-lg px-3 py-2 hover:bg-brand-soft" href="#problem">Проблема</a>
-      <a class="rounded-lg px-3 py-2 hover:bg-brand-soft" href="#steps">4 шага</a>
-      <a class="rounded-lg px-3 py-2 hover:bg-brand-soft" href="#unique">Отличия</a>
-      <button type="button" data-open-agent class="rounded-lg px-3 py-2 text-left text-brand hover:bg-brand-soft">✨ Спросить ИИ-агента</button>
-      <a class="rounded-lg px-3 py-2 hover:bg-brand-soft" href="#demo">Демо-прототип</a>
-      <a class="rounded-lg px-3 py-2 hover:bg-brand-soft" href="#trust">Доверие и ИИ</a>
-      <a class="rounded-lg px-3 py-2 hover:bg-brand-soft" href="#effect">Эффект</a>
-      <a class="rounded-lg px-3 py-2 hover:bg-brand-soft" href="#team">Команда</a>
-      <a class="rounded-lg px-3 py-2 font-semibold text-brand hover:bg-brand-soft" href="people.html">🟢 Люди в боте</a>
-      <a class="rounded-lg px-3 py-2 hover:bg-brand-soft" href="#faq">Вопросы</a>
-      <a href="https://t.me/Tenchat2035bot" target="_blank" rel="noopener" class="btn-blue mt-2 inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 font-semibold">
-        <i data-lucide="send" class="h-4 w-4"></i>Открыть @Tenchat2035bot
-      </a>
+      <button type="button" data-open-agent class="btn-dark hidden rounded-full px-5 py-2.5 text-[15px] font-semibold md:inline-flex">Спросить ИИ</button>
+      <a href="https://t.me/Tenchat2035bot" target="_blank" rel="noopener" class="btn-red whitespace-nowrap rounded-full px-4 py-2.5 text-[15px] font-semibold sm:px-5">Открыть бота</a>
     </div>
   </div>
 </header>
 
 <main id="top">
 
-<!-- БЛОК 1. HERO -->
-<section class="relative">
-  <div class="dots absolute inset-0 -z-10"></div>
-  <div class="mx-auto grid max-w-7xl items-center gap-8 px-4 pb-6 pt-8 sm:px-6 lg:grid-cols-[1.1fr_.9fr] lg:pt-10">
-    <div class="reveal">
-      <span class="inline-flex flex-wrap items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-xs font-medium text-mute shadow-sm sm:text-sm">
-        <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-aqua animate-ping2"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-aqua"></span></span>
-        Всероссийский ИИ-хакатон 2026 • Будущее деловых связей (5+ млн пользователей)
-      </span>
-      <h1 class="mt-5 font-display text-[36px] font-extrabold leading-[1.06] tracking-tight text-ink sm:text-5xl lg:text-[62px]">
-        Деловые знакомства <span class="text-grad">без холодных писем</span> и страха отказа
-      </h1>
-      <p class="mt-4 max-w-xl text-lg leading-relaxed text-mute">
-        В 2035 году вам не нужно листать тысячи анкет и придумывать повод написать. ИИ-агент TenChat сам находит людей по вашим целям, объясняет взаимную выгоду и запускает диалог.
-      </p>
+<!-- ПЕРВЫЙ ЭКРАН -->
+<section class="mx-auto grid max-w-7xl items-center gap-10 px-4 pb-14 pt-10 sm:px-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,.95fr)] lg:pt-16">
+  <div class="min-w-0">
+    <h1 class="text-[40px] font-extrabold leading-[1.08] tracking-tight text-ink sm:text-6xl">Деловые знакомства без холодных писем</h1>
+    <p class="mt-5 max-w-xl text-xl text-mute">ИИ сам находит нужных людей, объясняет взаимную выгоду и пишет первым. А если откажут — вы об этом не узнаете.</p>
+    <form id="heroForm" class="box mt-8 flex max-w-xl items-center gap-2 p-2 shadow-sm">
+      <input id="heroInput" type="text" maxlength="300" placeholder="Я дизайнер, ищу команду для стартапа" class="h-12 min-w-0 flex-1 bg-transparent px-4 text-[17px] text-ink outline-none placeholder:text-mute/70">
+      <button type="submit" class="btn-red shrink-0 rounded-2xl px-5 py-3.5 text-[16px] font-bold sm:px-7">Найти людей</button>
+    </form>
+    <div class="mt-10 flex items-center gap-4">
+      <div id="heroFaces" class="flex -space-x-3"></div>
+      <div>
+        <div class="text-2xl font-extrabold text-ink">100 человек</div>
+        <div class="text-mute">в 17 сферах · бот бесплатный</div>
+      </div>
+    </div>
+  </div>
+  <div class="relative min-w-0">
+    <div id="heroRail" class="rail -mx-4 flex gap-4 overflow-x-auto px-4 pb-2 lg:mx-0 lg:px-0"></div>
+  </div>
+</section>
+
+<!-- КАК РАБОТАЕТ -->
+<section id="how" class="bg-paper py-16">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6">
+    <h2 class="text-3xl font-extrabold tracking-tight text-ink sm:text-[42px]">Как это работает</h2>
+    <p class="mt-3 max-w-2xl text-lg text-mute">Четыре шага от рассказа о себе до знакомства — около трёх минут.</p>
+    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <article class="box p-6"><div class="text-4xl font-extrabold text-brand">01</div><h3 class="mt-4 text-lg font-bold text-ink">Кто я</h3><p class="mt-2 text-mute">Одно сообщение о себе и своём проекте. ИИ задаст пару уточняющих вопросов.</p></article>
+      <article class="box p-6"><div class="text-4xl font-extrabold text-brand">02</div><h3 class="mt-4 text-lg font-bold text-ink">Кого хочу найти</h3><p class="mt-2 text-mute">Коллеги по профессии и люди, которые усилят проект, — те, кто сам ищет таких, как вы.</p></article>
+      <article class="box p-6"><div class="text-4xl font-extrabold text-brand">03</div><h3 class="mt-4 text-lg font-bold text-ink">Почему знакомиться</h3><p class="mt-2 text-mute">Процент совпадения и конкретная польза для обоих.</p></article>
+      <article class="box p-6"><div class="text-4xl font-extrabold text-brand">04</div><h3 class="mt-4 text-lg font-bold text-ink">ИИ пишет первым</h3><p class="mt-2 text-mute">Согласны оба — открываются контакты и план проекта. Отказ вы не увидите.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ЛЮДИ -->
+<section class="mx-auto max-w-7xl px-4 py-16 sm:px-6">
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <h2 class="text-3xl font-extrabold tracking-tight text-ink sm:text-[42px]">Люди в боте</h2>
+      <p class="mt-3 max-w-2xl text-lg text-mute">Каждый сам ищет деловые знакомства. Профили демонстрационные — так функция будет работать на реальных профилях TenChat.</p>
+    </div>
+    <a href="people.html" class="btn-dark rounded-full px-6 py-3 font-semibold">Смотреть всех 100</a>
+  </div>
+  <div id="peopleGrid" class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+</section>
+
+<!-- ОТЛИЧИЯ -->
+<section id="unique" class="bg-paper py-16">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6">
+    <h2 class="text-3xl font-extrabold tracking-tight text-ink sm:text-[42px]">Не ещё один список анкет</h2>
+    <p class="mt-3 max-w-2xl text-lg text-mute">Бизнес.Тиндер, LinkedIn и Random Coffee показывают людей — дальше всё делаете сами. У нас первый шаг делает ИИ.</p>
+    <div class="mt-8 grid gap-4 md:grid-cols-3">
+      <article class="box p-7"><i data-lucide="send" class="h-8 w-8 text-brand"></i><h3 class="mt-5 text-xl font-bold text-ink">ИИ пишет первым</h3><p class="mt-2 text-mute">Не нужно придумывать сообщение — приглашение уходит по одной кнопке.</p></article>
+      <article class="box p-7"><i data-lucide="eye-off" class="h-8 w-8 text-brand"></i><h3 class="mt-5 text-xl font-bold text-ink">Отказ без боли</h3><p class="mt-2 text-mute">Человек видит приглашение без вашего имени. Откажет — бот просто предложит следующего.</p></article>
+      <article class="box p-7"><i data-lucide="handshake" class="h-8 w-8 text-brand"></i><h3 class="mt-5 text-xl font-bold text-ink">Взаимный интерес</h3><p class="mt-2 text-mute">Подбираем тех, кто сам ищет таких, как вы, и объясняем, чем вы полезны друг другу.</p></article>
+    </div>
+    <div class="box mt-4 flex flex-col items-start gap-3 p-6 sm:flex-row sm:items-center">
+      <span class="rounded-full bg-brand-soft px-3 py-1 text-sm font-bold text-brand">Для TenChat</span>
+      <p class="text-[17px] font-medium text-ink">Это Бизнес.Тиндер 2.0: ИИ встаёт поверх профилей, статусов и делового мессенджера, которые уже есть.</p>
+    </div>
+  </div>
+</section>
+
+<!-- КОМАНДА -->
+<section id="team" class="mx-auto max-w-7xl px-4 py-16 sm:px-6">
+  <h2 class="text-3xl font-extrabold tracking-tight text-ink sm:text-[42px]">Команда Da BOSS'ы</h2>
+  <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <article class="box p-6"><div class="grid h-12 w-12 place-items-center rounded-full bg-brand text-lg font-bold text-white">ПБ</div><div class="mt-4 text-lg font-bold text-ink">Пётр Бондаренко</div><div class="font-medium text-brand">Лидер-капитан</div><p class="mt-2 text-sm text-mute">Бот, ИИ-агент сайта, подбор по 17 сферам.</p></article>
+    <article class="box p-6"><div class="grid h-12 w-12 place-items-center rounded-full bg-slate text-lg font-bold text-white">АС</div><div class="mt-4 text-lg font-bold text-ink">Алексей Соловьев</div><div class="font-medium text-brand">Технарь, разработчик</div><p class="mt-2 text-sm text-mute">Сценарий «4 шага», отказ без боли, тесты бота.</p></article>
+    <article class="box p-6"><div class="grid h-12 w-12 place-items-center rounded-full bg-slate text-lg font-bold text-white">ИГ</div><div class="mt-4 text-lg font-bold text-ink">Игорь Гарт</div><div class="font-medium text-brand">Креативщик, дизайнер</div><p class="mt-2 text-sm text-mute">Логотип, стиль, дизайн сайта и презентации.</p></article>
+    <article class="box p-6"><div class="grid h-12 w-12 place-items-center rounded-full bg-slate text-lg font-bold text-white">ТК</div><div class="mt-4 text-lg font-bold text-ink">Тимофей Кондратенко</div><div class="font-medium text-brand">Аналитик и исследователь</div><p class="mt-2 text-sm text-mute">TenChat и конкуренты, проблема, следующие шаги.</p></article>
+  </div>
+</section>
+
+<!-- ФИНАЛ -->
+<section class="mx-auto max-w-7xl px-4 pb-16 sm:px-6">
+  <div class="flex flex-col items-center gap-8 rounded-[32px] bg-paper p-8 sm:p-12 md:flex-row md:justify-between">
+    <div class="max-w-xl text-center md:text-left">
+      <h2 class="text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">Попробуйте прямо сейчас</h2>
+      <p class="mt-3 text-lg text-mute">Наведите камеру на QR — бот откроется в Telegram. Бесплатно и без регистрации.</p>
       <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-        <a href="https://t.me/Tenchat2035bot" target="_blank" rel="noopener" class="btn-blue inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-4 font-semibold">
-          <i data-lucide="bot" class="h-5 w-5"></i>Протестировать ИИ-бота в Telegram
-        </a>
-        <button type="button" data-open-agent class="btn-light inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-4 font-semibold">
-          <i data-lucide="sparkles" class="h-5 w-5 text-brand"></i>Спросить ИИ-агента здесь
-        </button>
-      </div>
-      <div class="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-mute">
-        <span class="inline-flex items-center gap-2"><i data-lucide="shield-check" class="h-4 w-4 text-match"></i>Double Opt-In</span>
-        <span class="inline-flex items-center gap-2"><i data-lucide="sparkles" class="h-4 w-4 text-brand"></i>ИИ пишет первым</span>
-        <span class="inline-flex items-center gap-2"><i data-lucide="eye-off" class="h-4 w-4 text-aqua"></i>Отказ без боли</span>
-        <span class="inline-flex items-center gap-2"><span class="h-2.5 w-2.5 rounded-full bg-match"></span>Живая сеть реальных людей</span>
+        <a href="https://t.me/Tenchat2035bot" target="_blank" rel="noopener" class="btn-red rounded-full px-7 py-3.5 text-center text-[16px] font-bold">Открыть @Tenchat2035bot</a>
+        <button type="button" data-open-agent class="btn-dark rounded-full px-7 py-3.5 text-[16px] font-bold">Спросить ИИ-агента</button>
       </div>
     </div>
-
-    <!-- Мокап бота + QR -->
-    <div class="reveal mx-auto w-full max-w-md">
-      <div class="rounded-[30px] bg-gradient-to-br from-brand to-aqua p-[2px] shadow-2xl shadow-brand/25">
-        <div class="overflow-hidden rounded-[28px] bg-white">
-          <div class="flex items-center gap-3 border-b border-line px-4 py-3">
-            <img src="logo-icon.png" alt="" width="40" height="40" class="h-10 w-10 rounded-full border border-line bg-white object-contain p-1">
-            <div class="leading-tight">
-              <div class="text-sm font-semibold text-ink">Tenchat2035</div>
-              <div class="flex items-center gap-1.5 text-xs text-brand"><span class="h-1.5 w-1.5 rounded-full bg-aqua animate-pulse"></span>@Tenchat2035bot · ИИ подбирает…</div>
-            </div>
-          </div>
-          <div class="space-y-3 bg-[#EEF3FB] px-3 py-4 text-[13.5px] leading-snug">
-            <div class="ml-auto max-w-[85%] rounded-2xl rounded-br-md bg-brand px-3.5 py-2.5 text-white">Я frontend-разработчик. Ищу партнёра по маркетингу для сервиса онлайн-записи 🚀</div>
-            <div class="max-w-[90%] rounded-2xl rounded-bl-md bg-white px-3.5 py-2.5 text-ink shadow-sm">🔎 Сравниваю ваш профиль с людьми, которые сами ищут таких, как вы…</div>
-            <div class="max-w-[94%] rounded-2xl rounded-bl-md border border-match/40 bg-white px-3.5 py-3 shadow-sm">
-              <div class="flex items-center justify-between gap-2">
-                <div class="font-semibold text-ink">🎯 Марина Гусева</div>
-                <span class="rounded-full bg-match px-2 py-0.5 text-[11px] font-bold text-white">98% match</span>
-              </div>
-              <div class="mt-1 text-mute">Performance-маркетолог · 8 лет · ищет разработчика в долю</div>
-              <div class="mt-2 text-ink">💡 Вы закрываете продукт, она — продажи. Оба ищете партнёра для сервиса.</div>
-            </div>
-            <div class="grid grid-cols-2 gap-2">
-              <span class="rounded-xl bg-white py-2 text-center text-xs font-semibold text-brand shadow-sm">🤝 Познакомиться</span>
-              <span class="rounded-xl bg-white py-2 text-center text-xs font-semibold text-brand shadow-sm">↩️ Другой</span>
-            </div>
-            <div class="max-w-[85%] rounded-2xl rounded-bl-md bg-white px-3.5 py-2.5 text-ink shadow-sm">🎉 <b>Марина согласна познакомиться!</b> Чат открыт.</div>
-          </div>
-        </div>
-      </div>
-      <div class="card mt-4 flex items-center gap-4 rounded-3xl p-4">
-        <img src="qr-tenchat2035bot.png" onerror="this.onerror=null;this.src='https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://t.me/Tenchat2035bot'" alt="QR-код для перехода к @Tenchat2035bot" width="96" height="96" class="h-24 w-24 shrink-0 rounded-xl border border-line bg-white p-1.5">
-        <div>
-          <div class="text-sm leading-snug text-mute">Наведите камеру смартфона, чтобы протестировать прототип вживую</div>
-          <a href="https://t.me/Tenchat2035bot" target="_blank" rel="noopener" class="mt-1.5 inline-block font-display text-base font-extrabold text-brand hover:underline">@Tenchat2035bot</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="mx-auto max-w-7xl px-4 pb-4 sm:px-6">
-    <div class="reveal grid grid-cols-2 gap-3 rounded-3xl border border-line bg-white/70 p-3 backdrop-blur md:grid-cols-4">
-      <a href="people.html" class="rounded-2xl bg-paper px-4 py-3 transition hover:bg-brand-soft"><div class="font-display text-2xl font-extrabold text-brand sm:text-3xl">191</div><div class="text-sm text-mute">профиль в базе бота →</div></a>
-      <div class="rounded-2xl bg-paper px-4 py-3"><div class="font-display text-2xl font-extrabold text-[#0EA5D0] sm:text-3xl">17</div><div class="text-sm text-mute">сфер: от школы до стройки</div></div>
-      <div class="rounded-2xl bg-paper px-4 py-3"><div class="font-display text-2xl font-extrabold text-violet sm:text-3xl">~3 мин</div><div class="text-sm text-mute">от рассказа о себе до знакомства</div></div>
-      <div class="rounded-2xl bg-paper px-4 py-3"><div class="font-display text-2xl font-extrabold text-match sm:text-3xl">0 ₽</div><div class="text-sm text-mute">бот бесплатный, без регистрации</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- БЛОК 2. ПРОБЛЕМА -->
-<section id="problem" class="mx-auto max-w-7xl px-4 py-9 sm:px-6 lg:py-11">
-  <div class="reveal max-w-3xl">
-    <div class="text-base font-extrabold uppercase tracking-[.16em] text-brand">Проблема</div>
-    <h2 class="mt-2 font-display text-[28px] font-extrabold leading-tight text-ink sm:text-4xl">Почему сегодня трудно знакомиться по делу?</h2>
-  </div>
-  <div class="mt-6 grid gap-5 md:grid-cols-3">
-    <article class="reveal card card-hover rounded-3xl p-6">
-      <div class="flex items-center justify-between gap-4"><div class="font-display text-4xl font-extrabold text-ink">Страшно</div><div class="grid h-12 w-12 place-items-center rounded-2xl bg-brand-soft text-brand"><i data-lucide="hand" class="h-6 w-6"></i></div></div>
-      <h3 class="mt-3 text-lg font-bold text-ink">Страх отказа и неловкость</h3>
-      <p class="mt-2 text-mute">Молодые специалисты и стартаперы боятся писать статусным экспертам первыми, опасаясь показаться навязчивыми.</p>
-    </article>
-    <article class="reveal card card-hover rounded-3xl p-6">
-      <div class="flex items-center justify-between gap-4"><div class="font-display text-4xl font-extrabold text-ink">Часы</div><div class="grid h-12 w-12 place-items-center rounded-2xl bg-aqua-soft text-[#0EA5D0]"><i data-lucide="scroll-text" class="h-6 w-6"></i></div></div>
-      <h3 class="mt-3 text-lg font-bold text-ink">Слепой скроллинг профилей</h3>
-      <p class="mt-2 text-mute">Пользователи тратят часы на просмотр анкет в TenChat, но не понимают, открыт ли человек к совместным проектам прямо сейчас.</p>
-    </article>
-    <article class="reveal card card-hover rounded-3xl p-6">
-      <div class="flex items-center justify-between gap-4"><div class="font-display text-4xl font-extrabold text-ink">0 ответов</div><div class="grid h-12 w-12 place-items-center rounded-2xl bg-[#EEEBFF] text-violet"><i data-lucide="message-square-x" class="h-6 w-6"></i></div></div>
-      <h3 class="mt-3 text-lg font-bold text-ink">Шаблонные сообщения без ответа</h3>
-      <p class="mt-2 text-mute">«Здравствуйте, давайте сотрудничать» игнорируют: в таких сообщениях не сформулирована конкретная взаимная польза (Win-Win).</p>
-    </article>
-  </div>
-  <div class="reveal mt-5 flex flex-col items-start gap-4 rounded-3xl bg-gradient-to-r from-brand to-aqua px-6 py-5 text-white shadow-xl shadow-brand/25 sm:flex-row sm:items-center">
-    <div class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-white/20"><i data-lucide="sparkles" class="h-6 w-6"></i></div>
-    <p class="font-display text-lg font-extrabold leading-snug sm:text-xl">Мы заменили хаотичный поиск на осмысленный ИИ-мэтчинг по формуле 4 шагов</p>
-  </div>
-</section>
-
-<!-- БЛОК 3. 4 ШАГА -->
-<section id="steps" class="mx-auto max-w-7xl px-4 py-9 sm:px-6 lg:py-11">
-  <div class="reveal max-w-3xl">
-    <div class="text-base font-extrabold uppercase tracking-[.16em] text-[#0A86B0]">Сценарий кейса</div>
-    <h2 class="mt-2 font-display text-[28px] font-extrabold leading-tight text-ink sm:text-4xl">Как работает ИИ-функция: 4 шага к идеальному контакту</h2>
-  </div>
-  <div class="relative mt-6">
-    <div aria-hidden="true" class="absolute left-0 right-0 top-[46px] hidden h-[2px] bg-gradient-to-r from-brand via-aqua to-match lg:block"></div>
-    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-      <article class="reveal card card-hover relative rounded-3xl p-6">
-        <div class="flex items-center justify-between"><span class="grid h-11 w-11 place-items-center rounded-2xl bg-brand font-display text-lg font-extrabold text-white">01</span><i data-lucide="user-round" class="h-6 w-6 text-brand/50"></i></div>
-        <h3 class="mt-4 font-display text-lg font-extrabold text-ink">Кто я</h3>
-        <p class="mt-2 text-mute">Пользователь за 30 секунд рассказывает ИИ-агенту о своей роли, навыках, текущем проекте и сильных сторонах.</p>
-      </article>
-      <article class="reveal card card-hover relative rounded-3xl p-6">
-        <div class="flex items-center justify-between"><span class="grid h-11 w-11 place-items-center rounded-2xl bg-aqua font-display text-lg font-extrabold text-white">02</span><i data-lucide="target" class="h-6 w-6 text-aqua/70"></i></div>
-        <h3 class="mt-4 font-display text-lg font-extrabold text-ink">Кого хочу найти</h3>
-        <p class="mt-2 text-mute">Чёткий запрос без воды — поиск наставника, co-founder'а в стартап, инвестора, B2B-клиента или команды.</p>
-      </article>
-      <article class="reveal card card-hover relative rounded-3xl p-6">
-        <div class="flex items-center justify-between"><span class="grid h-11 w-11 place-items-center rounded-2xl bg-violet font-display text-lg font-extrabold text-white">03</span><i data-lucide="brain-circuit" class="h-6 w-6 text-violet/60"></i></div>
-        <h3 class="mt-4 font-display text-lg font-extrabold text-ink">Почему нам стоит познакомиться</h3>
-        <p class="mt-2 text-mute">ИИ сопоставляет открытые данные и цели обоих людей и формулирует 3 конкретных аргумента взаимной выгоды (Smart Pitch).</p>
-      </article>
-      <article class="reveal card card-hover relative rounded-3xl p-6">
-        <div class="flex items-center justify-between"><span class="grid h-11 w-11 place-items-center rounded-2xl bg-match font-display text-lg font-extrabold text-white">04</span><i data-lucide="calendar-check" class="h-6 w-6 text-match/70"></i></div>
-        <h3 class="mt-4 font-display text-lg font-extrabold text-ink">Что происходит дальше</h3>
-        <p class="mt-2 text-mute">ИИ сам пишет человеку первым. Согласны оба — открываются контакты, ИИ-чат и план совместного проекта. Отказ вы не увидите — ИИ просто предложит другого.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- БЛОК 3.5. ОТЛИЧИЯ -->
-<section id="unique" class="mx-auto max-w-7xl px-4 py-9 sm:px-6 lg:py-11">
-  <div class="reveal max-w-3xl">
-    <div class="text-base font-extrabold uppercase tracking-[.16em] text-violet">Чем мы отличаемся</div>
-    <h2 class="mt-2 font-display text-[28px] font-extrabold leading-tight text-ink sm:text-4xl">Не ещё один каталог анкет</h2>
-    <p class="mt-2 text-lg text-mute">Обычный поиск оставляет вас одного перед списком людей. Мы берём на себя самое трудное — первый шаг.</p>
-  </div>
-  <div class="mt-6 grid gap-5 lg:grid-cols-[1fr_1.15fr]">
-    <div class="reveal card overflow-hidden rounded-3xl">
-      <div class="grid grid-cols-[1.2fr_.9fr_.9fr] border-b border-line bg-paper text-xs font-bold uppercase tracking-wider text-mute">
-        <div class="p-4"></div><div class="p-4 text-center">Обычный поиск</div><div class="p-4 text-center text-brand">Tenchat2035</div>
-      </div>
-      <div class="divide-y divide-line text-sm">
-        <div class="grid grid-cols-[1.2fr_.9fr_.9fr] items-center"><div class="px-4 py-3 font-medium text-ink">Кто пишет первым</div><div class="px-4 py-3 text-center text-mute">Вы сами</div><div class="px-4 py-3 text-center font-semibold text-brand">ИИ за вас</div></div>
-        <div class="grid grid-cols-[1.2fr_.9fr_.9fr] items-center"><div class="px-4 py-3 font-medium text-ink">Интерес второй стороны</div><div class="px-4 py-3 text-center text-mute">Неизвестен</div><div class="px-4 py-3 text-center font-semibold text-brand">Взаимный</div></div>
-        <div class="grid grid-cols-[1.2fr_.9fr_.9fr] items-center"><div class="px-4 py-3 font-medium text-ink">Если отказали</div><div class="px-4 py-3 text-center text-mute">Неловко</div><div class="px-4 py-3 text-center font-semibold text-brand">Никто не узнает</div></div>
-        <div class="grid grid-cols-[1.2fr_.9fr_.9fr] items-center"><div class="px-4 py-3 font-medium text-ink">Повод для разговора</div><div class="px-4 py-3 text-center text-mute">Придумать самому</div><div class="px-4 py-3 text-center font-semibold text-brand">Готовый план</div></div>
-        <div class="grid grid-cols-[1.2fr_.9fr_.9fr] items-center"><div class="px-4 py-3 font-medium text-ink">Время до контакта</div><div class="px-4 py-3 text-center text-mute">Дни и недели</div><div class="px-4 py-3 text-center font-semibold text-brand">~3 минуты</div></div>
-      </div>
-    </div>
-    <div class="grid gap-5 sm:grid-cols-2">
-      <article class="reveal card card-hover rounded-3xl p-6">
-        <div class="grid h-11 w-11 place-items-center rounded-2xl bg-[#E6F8F1] text-match"><i data-lucide="radio-tower" class="h-5 w-5"></i></div>
-        <h3 class="mt-4 font-display text-lg font-extrabold text-ink">Живая сеть</h3>
-        <p class="mt-1.5 text-sm text-mute">Бот знакомит не только с демо-профилями, но и с реальными участниками — даже прямо в зале.</p>
-      </article>
-      <article class="reveal card card-hover rounded-3xl p-6">
-        <div class="grid h-11 w-11 place-items-center rounded-2xl bg-brand-soft text-brand"><i data-lucide="layers-3" class="h-5 w-5"></i></div>
-        <h3 class="mt-4 font-display text-lg font-extrabold text-ink">17 сфер, ~190 профилей</h3>
-        <p class="mt-1.5 text-sm text-mute">От логопеда до инженера. Нет подходящего — ИИ предложит типаж специалиста.</p>
-        <a href="people.html" class="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-brand hover:underline">Смотреть всех людей →</a>
-      </article>
-      <article class="reveal card card-hover rounded-3xl p-6">
-        <div class="grid h-11 w-11 place-items-center rounded-2xl bg-aqua-soft text-[#0EA5D0]"><i data-lucide="users-round" class="h-5 w-5"></i></div>
-        <h3 class="mt-4 font-display text-lg font-extrabold text-ink">Два блока подбора</h3>
-        <p class="mt-1.5 text-sm text-mute">«Коллеги по профессии» для обмена опытом и «Кто усилит твой проект» для команды.</p>
-      </article>
-      <article class="reveal card card-hover rounded-3xl p-6">
-        <div class="grid h-11 w-11 place-items-center rounded-2xl bg-[#EEEBFF] text-violet"><i data-lucide="chart-no-axes-column" class="h-5 w-5"></i></div>
-        <h3 class="mt-4 font-display text-lg font-extrabold text-ink">Реальные цифры</h3>
-        <p class="mt-1.5 text-sm text-mute">Встроенный опрос после подбора — проверяем гипотезы на живых пользователях, а не на слайдах.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- БЛОК 4. ДЕМО -->
-<section id="demo" class="mx-auto max-w-7xl px-4 py-9 sm:px-6 lg:py-11">
-  <div class="reveal max-w-3xl">
-    <div class="text-base font-extrabold uppercase tracking-[.16em] text-[#0A8F62]">Демо-прототип</div>
-    <h2 class="mt-2 font-display text-[28px] font-extrabold leading-tight text-ink sm:text-4xl">Посмотрите, как ИИ находит идеальный контакт</h2>
-    <p class="mt-2 text-lg text-mute">Выберите героя — симулятор пройдёт с ним все 4 шага.</p>
-  </div>
-
-  <div class="mt-6 grid gap-6 lg:grid-cols-[1.35fr_.65fr]">
-    <div class="reveal card rounded-[28px] p-4 sm:p-6">
-      <div id="tabs" role="tablist" class="grid gap-2 sm:grid-cols-3"></div>
-      <div id="sim" class="mt-4 grid gap-3 md:grid-cols-2"></div>
-    </div>
-
-    <aside class="reveal relative overflow-hidden rounded-[28px] bg-gradient-to-br from-brand-dark via-brand to-aqua p-6 text-white shadow-2xl shadow-brand/30 sm:p-7">
-      <div aria-hidden="true" class="absolute -right-20 -top-20 h-56 w-56 rounded-full bg-white/20 blur-3xl"></div>
-      <span class="relative inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-xs font-semibold">
-        <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-white animate-ping2"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-white"></span></span>Бот онлайн
-      </span>
-      <h3 class="relative mt-4 font-display text-2xl font-extrabold leading-tight">Проверьте алгоритм на своих задачах прямо сейчас</h3>
-      <p class="relative mt-3 text-white/85">Мы собрали работающего ИИ-агента в Telegram. Он проведёт вас по всем 4 шагам, задаст уточняющие вопросы и подберёт релевантные профили деловых партнёров.</p>
-      <ul class="relative mt-4 space-y-2">
-        <li class="flex gap-3"><i data-lucide="zap" class="mt-0.5 h-5 w-5 shrink-0"></i>Мгновенный запуск без регистрации</li>
-        <li class="flex gap-3"><i data-lucide="messages-square" class="mt-0.5 h-5 w-5 shrink-0"></i>Живой диалог с ИИ</li>
-        <li class="flex gap-3"><i data-lucide="wand-sparkles" class="mt-0.5 h-5 w-5 shrink-0"></i>Генерация персонального питча</li>
-        <li class="flex gap-3"><i data-lucide="users-round" class="mt-0.5 h-5 w-5 shrink-0"></i>Коллеги и партнёры под любую профессию</li>
-      </ul>
-      <a href="https://t.me/Tenchat2035bot" target="_blank" rel="noopener" class="relative mt-5 flex items-center justify-center gap-2 rounded-2xl bg-white px-5 py-3.5 text-center font-bold text-brand transition hover:scale-[1.02]">
-        <i data-lucide="send" class="h-5 w-5"></i>Запустить @Tenchat2035bot в Telegram
-      </a>
-      <div class="relative mt-4 flex items-center gap-4 rounded-2xl bg-white/15 p-3">
-        <img src="qr-tenchat2035bot.png" onerror="this.onerror=null;this.src='https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://t.me/Tenchat2035bot'" alt="QR-код @Tenchat2035bot" width="88" height="88" class="h-[88px] w-[88px] shrink-0 rounded-xl bg-white p-1.5">
-        <div class="text-sm text-white/90">Наведите камеру смартфона — бот откроется в Telegram</div>
-      </div>
-    </aside>
-  </div>
-</section>
-
-<!-- БЛОК 5. ДОВЕРИЕ -->
-<section id="trust" class="mx-auto max-w-7xl px-4 py-9 sm:px-6 lg:py-11">
-  <div class="reveal max-w-3xl">
-    <div class="text-base font-extrabold uppercase tracking-[.16em] text-brand">Доверие и ИИ</div>
-    <h2 class="mt-2 font-display text-[28px] font-extrabold leading-tight text-ink sm:text-4xl">Почему функции доверяют?</h2>
-    <p class="mt-2 text-lg text-mute">Чёткая граница между тем, что ИИ использует для мэтчинга, и тем, что остаётся только вашим.</p>
-  </div>
-  <div class="mt-6 grid gap-5 md:grid-cols-2">
-    <article class="reveal card card-hover rounded-3xl p-6">
-      <div class="flex items-center gap-3">
-        <div class="grid h-12 w-12 place-items-center rounded-2xl bg-[#E6F8F1] text-match"><i data-lucide="scan-eye" class="h-6 w-6"></i></div>
-        <div><h3 class="font-display text-lg font-extrabold text-ink">Что ИИ знает и анализирует</h3><div class="text-sm font-medium text-match">Открытый контур</div></div>
-      </div>
-      <ul class="mt-4 space-y-2.5 text-ink">
-        <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-5 w-5 shrink-0 text-match"></i>Профессиональные цели</li>
-        <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-5 w-5 shrink-0 text-match"></i>Стек навыков и опыт</li>
-        <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-5 w-5 shrink-0 text-match"></i>Публичные кейсы в ленте TenChat</li>
-        <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-5 w-5 shrink-0 text-match"></i>Актуальный статус поиска: менторство, проекты, найм</li>
-      </ul>
-    </article>
-    <article class="reveal card card-hover rounded-3xl p-6">
-      <div class="flex items-center gap-3">
-        <div class="grid h-12 w-12 place-items-center rounded-2xl bg-brand-soft text-brand"><i data-lucide="lock-keyhole" class="h-6 w-6"></i></div>
-        <div><h3 class="font-display text-lg font-extrabold text-ink">Что ИИ НЕ трогает</h3><div class="text-sm font-medium text-brand">Приватный контур</div></div>
-      </div>
-      <ul class="mt-4 space-y-2.5 text-ink">
-        <li class="flex gap-3"><i data-lucide="x" class="mt-0.5 h-5 w-5 shrink-0 text-brand"></i>Личные переписки</li>
-        <li class="flex gap-3"><i data-lucide="x" class="mt-0.5 h-5 w-5 shrink-0 text-brand"></i>Финансовые тайны</li>
-        <li class="flex gap-3"><i data-lucide="x" class="mt-0.5 h-5 w-5 shrink-0 text-brand"></i>Закрытые контакты</li>
-      </ul>
-      <div class="mt-4 flex items-start gap-3 rounded-2xl bg-aqua-soft p-4">
-        <i data-lucide="handshake" class="mt-0.5 h-5 w-5 shrink-0 text-[#0EA5D0]"></i>
-        <p class="text-sm text-ink"><b class="text-ink">Double Opt-In:</b> знакомство происходит только при обоюдном согласии. Пока человек не ответил «да», он не видит вашего имени — без спама и неловкости.</p>
-      </div>
-    </article>
-  </div>
-</section>
-
-<!-- БЛОК 6. ЭФФЕКТ -->
-<section id="effect" class="mx-auto max-w-7xl px-4 py-9 sm:px-6 lg:py-11">
-  <div class="reveal max-w-3xl">
-    <div class="text-base font-extrabold uppercase tracking-[.16em] text-[#0A8F62]">Эффект</div>
-    <h2 class="mt-2 font-display text-[28px] font-extrabold leading-tight text-ink sm:text-4xl">Что получают пользователи и TenChat</h2>
-  </div>
-  <div class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-    <article class="reveal relative flex flex-col justify-between overflow-hidden rounded-3xl bg-gradient-to-br from-brand-dark via-brand to-aqua p-6 text-white shadow-2xl shadow-brand/30">
-      <div aria-hidden="true" class="absolute -bottom-24 -right-16 h-72 w-72 rounded-full bg-white/15 blur-2xl"></div>
-      <i data-lucide="rocket" class="relative h-8 w-8"></i>
-      <div class="relative">
-        <div class="mt-3 font-display text-5xl font-extrabold">~3 мин</div>
-        <p class="mt-2 text-white/90">От рассказа о себе до первого знакомства — вместо недель поиска вручную.</p>
-      </div>
-    </article>
-    <article class="reveal card card-hover rounded-3xl p-6">
-      <div class="flex items-start justify-between gap-4">
-        <div class="font-display text-4xl font-extrabold text-match">1 клик</div>
-        <i data-lucide="message-circle-reply" class="h-7 w-7 text-match"></i>
-      </div>
-      <p class="mt-3 text-mute">Столько нужно, чтобы ИИ написал первое сообщение — без шаблонов и неловкости.</p>
-    </article>
-    <article class="reveal card card-hover rounded-3xl p-6">
-      <div class="font-display text-4xl font-extrabold text-aqua">0 спама</div>
-      <p class="mt-3 text-mute">Приглашение уходит только по кнопке, а контакты открываются, если согласны оба.</p>
-    </article>
-    <article class="reveal card card-hover rounded-3xl p-6">
-      <div class="font-display text-4xl font-extrabold text-brand">1 000</div>
-      <p class="mt-3 text-mute">Пользователей TenChat в пилоте: измерим, сколько приглашений принимают.</p>
-    </article>
-  </div>
-  <p class="mt-3 text-xs text-mute">Первые три пункта — то, как бот работает уже сейчас. Влияние на удержание и выручку проверим на пилоте.</p>
-</section>
-
-<!-- БЛОК 7. КОМАНДА -->
-<section id="team" class="mx-auto max-w-7xl px-4 py-9 sm:px-6 lg:py-11">
-  <div class="reveal max-w-3xl">
-    <div class="text-base font-extrabold uppercase tracking-[.16em] text-brand">Команда Da BOSS'ы</div>
-    <h2 class="mt-2 font-display text-[28px] font-extrabold leading-tight text-ink sm:text-4xl">Кто сделал Tenchat2035</h2>
-  </div>
-  <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-    <article class="reveal card card-hover rounded-3xl p-5">
-      <div class="flex items-center gap-3"><span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-brand font-display font-extrabold text-white">ПБ</span><div><div class="font-display font-extrabold text-ink">Пётр Бондаренко</div><div class="text-sm font-medium text-brand">Лидер-капитан</div></div></div>
-      <p class="mt-3 text-sm text-mute">Собрал Telegram-бота и ИИ-агента сайта, подключил нейросети, настроил подбор по 17 сферам.</p>
-    </article>
-    <article class="reveal card card-hover rounded-3xl p-5">
-      <div class="flex items-center gap-3"><span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-aqua font-display font-extrabold text-white">АС</span><div><div class="font-display font-extrabold text-ink">Алексей Соловьев</div><div class="text-sm font-medium text-[#0EA5D0]">Технарь, разработчик</div></div></div>
-      <p class="mt-3 text-sm text-mute">Придумал сценарий «4 шага», взгляд партнёра и отказ без боли, тестировал бота.</p>
-    </article>
-    <article class="reveal card card-hover rounded-3xl p-5">
-      <div class="flex items-center gap-3"><span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-violet font-display font-extrabold text-white">ИГ</span><div><div class="font-display font-extrabold text-ink">Игорь Гарт</div><div class="text-sm font-medium text-violet">Креативщик, дизайнер</div></div></div>
-      <p class="mt-3 text-sm text-mute">Логотип и фирменный стиль, дизайн сайта и презентации, профили для базы.</p>
-    </article>
-    <article class="reveal card card-hover rounded-3xl p-5">
-      <div class="flex items-center gap-3"><span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-match font-display font-extrabold text-white">ТК</span><div><div class="font-display font-extrabold text-ink">Тимофей Кондратенко</div><div class="text-sm font-medium text-match">Аналитик и исследователь</div></div></div>
-      <p class="mt-3 text-sm text-mute">Изучил TenChat и конкурентов, описал проблему и героя, просчитал следующие шаги.</p>
-    </article>
-  </div>
-</section>
-
-<!-- БЛОК 8. ВОПРОСЫ -->
-<section id="faq" class="mx-auto max-w-7xl px-4 py-9 sm:px-6 lg:py-11">
-  <div class="reveal max-w-3xl">
-    <div class="text-base font-extrabold uppercase tracking-[.16em] text-violet">Частые вопросы</div>
-    <h2 class="mt-2 font-display text-[28px] font-extrabold leading-tight text-ink sm:text-4xl">Коротко о главном</h2>
-  </div>
-  <div class="reveal mt-6 grid gap-3 lg:grid-cols-2">
-    <details class="card group rounded-2xl px-5 py-4"><summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-ink">Это бесплатно?<i data-lucide="chevron-down" class="h-5 w-5 shrink-0 text-mute transition group-open:rotate-180"></i></summary><p class="mt-2 text-mute">Да. Бот работает на бесплатной нейросети Cloudflare, регистрация не нужна — достаточно Telegram.</p></details>
-    <details class="card group rounded-2xl px-5 py-4"><summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-ink">Что будет, если мне откажут?<i data-lucide="chevron-down" class="h-5 w-5 shrink-0 text-mute transition group-open:rotate-180"></i></summary><p class="mt-2 text-mute">Ничего неловкого. Человек получает приглашение без вашего имени, а при отказе вы просто увидите нового кандидата.</p></details>
-    <details class="card group rounded-2xl px-5 py-4"><summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-ink">Люди в боте настоящие?<i data-lucide="chevron-down" class="h-5 w-5 shrink-0 text-mute transition group-open:rotate-180"></i></summary><p class="mt-2 text-mute">В базе 191 демо-профиль, чтобы показать подбор. Плюс живая сеть: участники, которые разрешили показывать профиль, — их бот знакомит по-настоящему, с пометкой 🟢.</p></details>
-    <details class="card group rounded-2xl px-5 py-4"><summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-ink">Что ИИ знает обо мне?<i data-lucide="chevron-down" class="h-5 w-5 shrink-0 text-mute transition group-open:rotate-180"></i></summary><p class="mt-2 text-mute">Только то, что вы сами рассказали боту. Контакты открываются лишь при согласии обеих сторон, а командой /hide можно скрыть профиль.</p></details>
-    <details class="card group rounded-2xl px-5 py-4"><summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-ink">Чем это лучше обычного поиска в TenChat?<i data-lucide="chevron-down" class="h-5 w-5 shrink-0 text-mute transition group-open:rotate-180"></i></summary><p class="mt-2 text-mute">Не нужно листать анкеты и придумывать первое сообщение: ИИ сам находит людей, которые ищут таких, как вы, и объясняет, зачем вам знакомиться.</p></details>
-    <details class="card group rounded-2xl px-5 py-4"><summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-ink">Как это встроить в TenChat?<i data-lucide="chevron-down" class="h-5 w-5 shrink-0 text-mute transition group-open:rotate-180"></i></summary><p class="mt-2 text-mute">Подключить подбор к реальным профилям TenChat, провести пилот на тысяче пользователей и измерить, сколько приглашений принимают.</p></details>
+    <img src="qr-tenchat2035bot.png" onerror="this.onerror=null;this.src='https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://t.me/Tenchat2035bot'" alt="QR-код для перехода к @Tenchat2035bot" width="180" height="180" class="h-44 w-44 rounded-2xl border border-line bg-white p-3">
   </div>
 </section>
 
 </main>
 
-<!-- ПОДВАЛ -->
-<footer class="mx-auto max-w-7xl px-4 pb-10 pt-4 sm:px-6">
-  <div class="reveal relative overflow-hidden rounded-[32px] bg-ink px-6 py-8 text-center text-white sm:px-10 sm:py-10">
-    <div aria-hidden="true" class="absolute -left-20 -top-24 h-72 w-72 rounded-full bg-brand/50 blur-[90px]"></div>
-    <div aria-hidden="true" class="absolute -bottom-24 -right-16 h-72 w-72 rounded-full bg-aqua/40 blur-[90px]"></div>
-    <img src="logo-full.jpg" alt="Логотип Tenchat2035" width="160" height="160" class="relative mx-auto h-20 w-20 rounded-2xl bg-white object-contain p-1.5 shadow-xl sm:h-24 sm:w-24">
-    <h2 class="relative mx-auto mt-5 max-w-3xl font-display text-2xl font-extrabold leading-tight sm:text-3xl">Готовы заглянуть в деловой нетворкинг 2035 года? Испытайте нашего ИИ-агента прямо сейчас</h2>
-    <div class="relative mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
-      <a href="https://t.me/Tenchat2035bot" target="_blank" rel="noopener" class="btn-blue inline-flex items-center gap-2 rounded-2xl px-7 py-4 font-semibold">
-        <i data-lucide="send" class="h-5 w-5"></i>Открыть @Tenchat2035bot
-      </a>
-      <button type="button" data-open-agent class="inline-flex items-center gap-2 rounded-2xl border border-white/25 bg-white/10 px-7 py-4 font-semibold text-white transition hover:bg-white/20">
-        <i data-lucide="sparkles" class="h-5 w-5"></i>Спросить ИИ-агента
-      </button>
-    </div>
-  </div>
-  <p class="mt-5 text-center text-sm text-mute">Разработано специально для Всероссийского ИИ-хакатона • Московская экономическая школа (МЭШ) • Октябрь 2026 • Кейс №1 TenChat • Команда Da BOSS'ы</p>
+<footer class="border-t border-line py-6 text-center text-sm text-mute">
+  Всероссийский ИИ-хакатон МЭШ 2026 · Кейс №1 TenChat · Команда Da BOSS'ы, № 16
 </footer>
 
 <!-- ИИ-АГЕНТ НА САЙТЕ -->
@@ -510,14 +190,14 @@
     <button id="agentTeaserClose" type="button" aria-label="Скрыть подсказку" class="absolute -left-2 -top-2 grid h-6 w-6 place-items-center rounded-full border border-line bg-white text-mute hover:text-ink"><i data-lucide="x" class="h-3.5 w-3.5"></i></button>
     <b class="font-semibold">Кого ищешь? 👋</b><br><span id="agentTeaserText" class="text-mute">Подберу людей под твой проект за минуту</span>
   </div>
-  <button type="button" data-open-agent aria-label="Открыть ИИ-агента" class="avatar relative grid h-16 w-16 shrink-0 place-items-center rounded-full bg-gradient-to-br from-brand to-aqua p-[3px] shadow-xl shadow-brand/40 transition hover:scale-105">
+  <button type="button" data-open-agent aria-label="Открыть ИИ-агента" class="avatar relative grid h-16 w-16 shrink-0 place-items-center rounded-full bg-brand p-[3px] shadow-xl shadow-brand/40 transition hover:scale-105">
     <span aria-hidden="true" class="absolute inset-0 rounded-full bg-aqua/40 animate-ping2"></span>
     <img src="logo-icon.png" alt="" width="56" height="56" class="relative h-full w-full rounded-full bg-white object-contain p-2">
     <span class="absolute bottom-0.5 right-0.5 h-4 w-4 rounded-full border-[3px] border-white bg-match"></span>
   </button>
 </div>
 <section id="agentPanel" class="closed fixed inset-x-2 bottom-2 z-[70] flex h-[min(620px,calc(100dvh-16px))] flex-col overflow-hidden rounded-[26px] border border-line bg-white shadow-2xl shadow-brand/25 sm:inset-x-auto sm:bottom-6 sm:right-6 sm:w-[400px]" role="dialog" aria-label="ИИ-агент Tenchat2035" aria-hidden="true">
-  <header class="flex items-center gap-3 bg-gradient-to-r from-brand to-aqua px-4 py-3 text-white">
+  <header class="flex items-center gap-3 bg-brand px-4 py-3 text-white">
     <img src="logo-icon.png" alt="" width="40" height="40" class="h-10 w-10 rounded-full bg-white object-contain p-1">
     <div class="min-w-0 flex-1 leading-tight">
       <div class="font-display font-extrabold">ИИ-агент Tenchat2035</div>
@@ -525,7 +205,7 @@
     </div>
     <button id="agentClose" type="button" aria-label="Закрыть" class="grid h-9 w-9 place-items-center rounded-full hover:bg-white/20"><i data-lucide="x" class="h-5 w-5"></i></button>
   </header>
-  <div id="agentLog" class="flex-1 space-y-3 overflow-y-auto bg-[#EEF3FB] px-3 py-4 text-[14px] leading-snug" aria-live="polite"></div>
+  <div id="agentLog" class="flex-1 space-y-3 overflow-y-auto bg-[#F6F1F1] px-3 py-4 text-[14px] leading-snug" aria-live="polite"></div>
   <div id="agentChips" class="flex gap-2 overflow-x-auto border-t border-line bg-white px-3 pt-3"></div>
   <form id="agentForm" class="flex items-end gap-2 bg-white p-3">
     <textarea id="agentInput" rows="1" maxlength="1000" placeholder="Напиши о себе или спроси…" class="max-h-28 min-h-[44px] flex-1 resize-none rounded-2xl border border-line bg-paper px-4 py-2.5 text-base text-ink outline-none focus:border-brand"></textarea>
@@ -567,166 +247,72 @@
 </script>
 
 <script>
-  // ---------- Данные симулятора ----------
-  var HEROES = [
-    {
-      tab: "Алексей, 21 год",
-      tabSub: "Основатель AI-стартапа · ищет ментора",
-      icon: "graduation-cap",
-      me: "Основатель AI-стартапа: сервис, который превращает лекции в конспекты. MVP готов, 300 студентов-пользователей.",
-      want: "Ментора, который запускал EdTech-продукт и поможет найти первых платящих клиентов.",
-      tags: ["#Менторство", "#AI", "#EdTech"],
-      match: { name: "Сергей Ким", role: "Ex-CTO образовательной платформы · ментор фаундеров", score: 97, emoji: "🧭", tags: ["EdTech", "Go-to-market", "Fundraising"] },
-      why: [
-        "Сергей вывел EdTech-платформу до 1 млн пользователей — знает путь от MVP до первых продаж.",
-        "Он сам ищет 1–2 менти с работающим продуктом, а у Алексея уже 300 пользователей.",
-        "Алексею — опыт и связи, Сергею — свежий взгляд на AI-инструменты для своих проектов."
-      ],
-      first: "Сергей, добрый день! ИИ TenChat подсказал, что вы помогаете фаундерам в EdTech. Я делаю AI-конспекты лекций — 300 студентов уже пользуются. Можно 20 минут вашего взгляда на то, как найти первых платящих клиентов?",
-      ice: ["С какой ошибки чаще всего начинают EdTech-фаундеры?", "Как вы искали первых платящих клиентов?"],
-      slot: "Чт, 19:00"
-    },
-    {
-      tab: "Мария, 24 года",
-      tabSub: "Product Designer · ищет команду в финтех",
-      icon: "pen-tool",
-      me: "Product Designer, 3 года в мобильных приложениях. Хочу в продуктовую команду, где дизайн влияет на метрики.",
-      want: "Команду финтех-проекта на ранней стадии, где можно отвечать за весь пользовательский опыт.",
-      tags: ["#Дизайн", "#Финтех", "#Команда"],
-      match: { name: "Денис Каримов", role: "Основатель финтех-приложения для личного бюджета", score: 96, emoji: "💹", tags: ["Fintech", "MVP", "Ищет дизайнера"] },
-      why: [
-        "Денис собирает команду для приложения учёта финансов и ищет именно продуктового дизайнера.",
-        "У Марии — опыт мобильных интерфейсов, у Дениса — экспертиза в финансах и первые пользователи.",
-        "Мария получает зону ответственности за весь UX, Денис — дизайн, который удерживает пользователей."
-      ],
-      first: "Денис, привет! ИИ TenChat подобрал нас: ты собираешь команду для финтех-приложения, а я продуктовый дизайнер с опытом мобильных интерфейсов. Покажешь, что уже есть? Набросаю идеи по онбордингу.",
-      ice: ["Какая метрика сейчас главная для продукта?", "Где пользователи чаще всего уходят?"],
-      slot: "Пт, 12:30"
-    },
-    {
-      tab: "Дмитрий, 32 года",
-      tabSub: "Предприниматель · ищет техпартнёра",
-      icon: "briefcase-business",
-      me: "Владелец сети из 6 автосервисов. Хочу запустить сервис онлайн-записи и для других мастерских города.",
-      want: "Технического партнёра (CTO), готового войти в долю и построить платформу.",
-      tags: ["#CoFounder", "#B2B", "#SaaS"],
-      match: { name: "Анна Лебедева", role: "Backend-разработчица, 10 лет · ищет бизнес-партнёра", score: 98, emoji: "💻", tags: ["Backend", "SaaS", "Ищет партнёра"] },
-      why: [
-        "Анна строила SaaS для малого бизнеса и сама ищет партнёра с клиентами и знанием рынка.",
-        "У Дмитрия 6 сервисов — готовая площадка для пилота и первые платящие клиенты с первого дня.",
-        "Анна получает долю в проекте с реальным спросом, Дмитрий — технического сооснователя."
-      ],
-      first: "Анна, здравствуйте! ИИ TenChat подсказал, что вы ищете бизнес-партнёра для SaaS. У меня 6 автосервисов — готовый пилот для онлайн-записи. Давайте обсудим платформу и доли?",
-      ice: ["Какой стек вы бы выбрали для платформы записи?", "Как видите разделение ролей и долей?"],
-      slot: "Ср, 18:00"
-    }
-  ];
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
 
-  var current = 0;
-  var tabsEl = document.getElementById("tabs");
-  var simEl = document.getElementById("sim");
-
-  function esc(s) {
-    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  // ---------- Люди из бота: карусель на первом экране и превью ----------
+  var HERO_IDS = [1, 60, 11, 102, 132, 146, 79, 162];
+  var GRID_IDS = [36, 19, 74, 23, 85, 31];
+  function face(p, cls) {
+    var img = p.avatar || p.a;
+    return img
+      ? '<img src="' + esc(img) + '" alt="" class="' + cls + ' object-cover">'
+      : '<span class="' + cls + ' grid place-items-center bg-white/10">' + esc(p.e) + "</span>";
   }
-
-  function renderTabs() {
-    tabsEl.innerHTML = HEROES.map(function (h, i) {
-      return '<button role="tab" aria-selected="' + (i === current) + '" data-i="' + i + '" class="flex items-center gap-3 rounded-2xl border border-line bg-white p-3 text-left transition hover:border-brand/50 ' + (i === current ? "tab-active" : "") + '">' +
-        '<span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand"><i data-lucide="' + h.icon + '" class="h-5 w-5"></i></span>' +
-        '<span><span class="block text-sm font-bold text-ink">' + esc(h.tab) + '</span><span class="block text-xs text-mute">' + esc(h.tabSub) + "</span></span></button>";
+  function askLink(p) {
+    return "?ask=" + encodeURIComponent("Хочу познакомиться: " + p.n + " — " + p.r + ". Чем мы можем быть полезны друг другу?");
+  }
+  function heroCard(p) {
+    return '<article class="pcard relative flex h-[420px] w-[280px] shrink-0 flex-col justify-end overflow-hidden rounded-[28px] p-6 text-white sm:w-[300px]">' +
+      '<span class="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-xs font-bold text-ink"><span class="h-2 w-2 rounded-full bg-match"></span>' + esc(p.st) + "</span>" +
+      '<div class="absolute inset-x-0 top-16 flex justify-center">' + face(p, "h-36 w-36 rounded-full text-7xl") + "</div>" +
+      '<div class="relative"><div class="text-2xl font-bold leading-tight">' + esc(p.n) + '</div><div class="mt-1 text-[15px] text-white/75">' + esc(p.r) + "</div></div>" +
+      '<a href="' + askLink(p) + '" aria-label="Познакомиться через ИИ" class="relative mt-5 grid h-12 w-12 place-items-center self-end rounded-full bg-white/15 hover:bg-brand"><i data-lucide="arrow-up-right" class="h-5 w-5"></i></a>' +
+      "</article>";
+  }
+  function gridCard(p) {
+    return '<article class="box flex flex-col p-5">' +
+      '<div class="flex items-center gap-3">' + face(p, "h-14 w-14 shrink-0 rounded-full bg-paper text-2xl").replace("bg-white/10", "bg-paper") +
+      '<div class="min-w-0"><div class="text-lg font-bold leading-tight text-ink">' + esc(p.n) + '</div><div class="mt-0.5 text-sm text-mute">' + esc(p.r) + "</div></div></div>" +
+      '<p class="mt-4 flex-1 text-[15px] text-ink"><b>Ищет:</b> ' + esc(p.l) + "</p>" +
+      '<a href="' + askLink(p) + '" class="btn-red mt-4 rounded-full px-4 py-2.5 text-center text-sm font-bold">Познакомиться через ИИ</a>' +
+      "</article>";
+  }
+  fetch("people.json").then(function (r) { return r.json(); }).then(function (d) {
+    var byId = {};
+    d.people.forEach(function (p) { byId[p.id] = p; });
+    var hero = HERO_IDS.map(function (id) { return byId[id]; }).filter(Boolean);
+    var grid = GRID_IDS.map(function (id) { return byId[id]; }).filter(Boolean);
+    document.getElementById("heroRail").innerHTML = hero.map(heroCard).join("");
+    document.getElementById("peopleGrid").innerHTML = grid.map(gridCard).join("");
+    document.getElementById("heroFaces").innerHTML = hero.slice(0, 4).map(function (p) {
+      return '<span class="grid h-12 w-12 place-items-center overflow-hidden rounded-full border-[3px] border-white bg-paper text-xl">' + (p.avatar || p.a ? '<img src="' + esc(p.avatar || p.a) + '" alt="" class="h-full w-full object-cover">' : esc(p.e)) + "</span>";
     }).join("");
-  }
-
-  function skeleton() {
-    simEl.innerHTML = [0, 1, 2, 3].map(function () {
-      return '<div class="rounded-2xl border border-line bg-white p-5"><div class="h-3 w-24 rounded skeleton animate-shimmer"></div><div class="mt-4 h-3 w-full rounded skeleton animate-shimmer"></div><div class="mt-2 h-3 w-4/5 rounded skeleton animate-shimmer"></div><div class="mt-2 h-3 w-3/5 rounded skeleton animate-shimmer"></div></div>';
-    }).join("") +
-      '<div class="md:col-span-2 flex items-center gap-2 text-sm font-medium text-brand"><span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-aqua animate-ping2"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-aqua"></span></span>ИИ анализирует цели обоих людей…</div>';
-  }
-
-  function label(n, text, color, extra) {
-    return '<div class="' + (extra || "") + ' flex items-center gap-2 text-xs font-bold uppercase tracking-wider ' + color + '"><span class="grid h-6 w-6 place-items-center rounded-lg bg-brand-soft font-display text-[11px] text-brand">' + n + "</span>" + text + "</div>";
-  }
-
-  function renderSim() {
-    var h = HEROES[current];
-    var m = h.match;
-    simEl.innerHTML =
-      '<div class="fade-swap rounded-2xl border border-line bg-white p-4">' +
-        label("01", "Кто я", "text-brand") +
-        '<p class="mt-2 text-sm text-ink">' + esc(h.me) + "</p>" +
-        label("02", "Кого ищу", "text-[#0EA5D0]", "mt-3") +
-        '<p class="mt-2 text-sm text-ink">' + esc(h.want) + "</p>" +
-        '<div class="mt-3 flex flex-wrap gap-1.5">' + h.tags.map(function (t) { return '<span class="rounded-full bg-paper px-2.5 py-1 text-xs font-medium text-mute">' + esc(t) + "</span>"; }).join("") + "</div>" +
-      "</div>" +
-
-      '<div class="fade-swap rounded-2xl border border-match/40 bg-[#F1FBF7] p-4" style="animation-delay:.08s">' +
-        '<div class="flex items-center justify-between gap-2"><div class="text-xs font-bold uppercase tracking-wider text-match">Найденный профиль в TenChat</div>' +
-        '<span class="rounded-full bg-match px-2.5 py-1 text-xs font-bold text-white">' + m.score + "%</span></div>" +
-        '<div class="mt-3 flex items-center gap-3"><span class="grid h-11 w-11 place-items-center rounded-2xl bg-white text-2xl shadow-sm">' + m.emoji + "</span>" +
-        '<div><div class="font-display text-base font-extrabold text-ink">' + esc(m.name) + '</div><div class="text-sm text-mute">' + esc(m.role) + "</div></div></div>" +
-        '<div class="mt-3 h-2 overflow-hidden rounded-full bg-white"><div class="h-full rounded-full bg-gradient-to-r from-brand via-aqua to-match transition-all duration-1000" style="width:0" data-w="' + m.score + '%"></div></div>' +
-        '<div class="mt-3 flex flex-wrap gap-1.5">' + m.tags.map(function (t) { return '<span class="rounded-full border border-match/40 bg-white px-2.5 py-1 text-xs font-medium text-match">' + esc(t) + "</span>"; }).join("") + "</div>" +
-      "</div>" +
-
-      '<div class="fade-swap rounded-2xl border border-violet/30 bg-[#F4F2FF] p-4" style="animation-delay:.16s">' +
-        label("03", "Почему вам стоит познакомиться", "text-violet") +
-        '<div class="mt-1 text-[11px] text-mute">Smart Pitch · сгенерировано ИИ</div>' +
-        '<ol class="mt-2 space-y-2 text-sm text-ink">' + h.why.map(function (w, i) {
-          return '<li class="flex gap-2.5"><span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-violet text-[11px] font-bold text-white">' + (i + 1) + "</span><span>" + esc(w) + "</span></li>";
-        }).join("") + "</ol>" +
-      "</div>" +
-
-      '<div class="fade-swap rounded-2xl border border-aqua/40 bg-aqua-soft p-4" style="animation-delay:.24s">' +
-        label("04", "Что дальше", "text-[#0EA5D0]") +
-        '<div class="mt-2 rounded-2xl rounded-bl-md bg-brand p-3 text-sm leading-snug text-white">' + esc(h.first) + "</div>" +
-        '<div class="mt-2 text-xs font-bold text-mute">Icebreaker-вопросы</div>' +
-        '<ul class="mt-1.5 space-y-1 text-sm text-ink">' + h.ice.map(function (q) { return "<li>❓ " + esc(q) + "</li>"; }).join("") + "</ul>" +
-        '<div class="mt-2 inline-flex items-center gap-2 rounded-xl bg-white px-3 py-1.5 text-sm font-medium text-ink shadow-sm"><i data-lucide="calendar-clock" class="h-4 w-4 text-match"></i>Слот в календаре: ' + esc(h.slot) + "</div>" +
-      "</div>";
     lucide.createIcons();
-    requestAnimationFrame(function () {
-      var bar = simEl.querySelector("[data-w]");
-      if (bar) bar.style.width = bar.getAttribute("data-w");
-    });
+    startRail();
+  }).catch(function () {});
+
+  // Карусель листается сама, пока на неё не навели
+  function startRail() {
+    var rail = document.getElementById("heroRail");
+    if (!rail || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var hold = false;
+    rail.addEventListener("mouseenter", function () { hold = true; });
+    rail.addEventListener("mouseleave", function () { hold = false; });
+    rail.addEventListener("touchstart", function () { hold = true; }, { passive: true });
+    setInterval(function () {
+      if (hold) return;
+      var step = rail.firstElementChild ? rail.firstElementChild.offsetWidth + 16 : 300;
+      var end = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 4;
+      rail.scrollTo({ left: end ? 0 : rail.scrollLeft + step, behavior: "smooth" });
+    }, 3500);
   }
 
-  var timer;
-  function select(i) {
-    current = i;
-    renderTabs();
-    lucide.createIcons();
-    skeleton();
-    clearTimeout(timer);
-    timer = setTimeout(renderSim, 650);
-  }
-
-  tabsEl.addEventListener("click", function (e) {
-    var b = e.target.closest("button[data-i]");
-    if (b) select(Number(b.getAttribute("data-i")));
-  });
-
-  // ---------- Меню на телефоне ----------
-  var menuBtn = document.getElementById("menuBtn");
-  var mobileMenu = document.getElementById("mobileMenu");
-  menuBtn.addEventListener("click", function () {
-    var open = mobileMenu.classList.toggle("hidden") === false;
-    menuBtn.setAttribute("aria-expanded", String(open));
-  });
-  mobileMenu.addEventListener("click", function (e) {
-    if (e.target.closest("a")) { mobileMenu.classList.add("hidden"); menuBtn.setAttribute("aria-expanded", "false"); }
-  });
-
-  // ---------- Появление блоков при скролле ----------
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (en) {
-      if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
-    });
-  }, { threshold: 0, rootMargin: "0px 0px 120px 0px" });
-  document.querySelectorAll(".reveal").forEach(function (el, i) {
-    el.style.transitionDelay = (i % 4) * 50 + "ms";
-    io.observe(el);
+  // Строка «Расскажи о себе» → ИИ-агент сразу ищет людей
+  document.getElementById("heroForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var v = document.getElementById("heroInput").value.trim() || document.getElementById("heroInput").placeholder;
+    openAgent();
+    ask(v);
   });
 
   // ---------- ИИ-агент (Claude через воркер бота) ----------
@@ -894,8 +480,7 @@
     }
   } catch (e) {}
 
-  renderTabs();
-  renderSim();
+
   lucide.createIcons();
 </script>
 </body>
