@@ -277,7 +277,7 @@
       '<a href="' + askLink(p) + '" class="btn-red mt-4 rounded-full px-4 py-2.5 text-center text-sm font-bold">Познакомиться через ИИ</a>' +
       "</article>";
   }
-  fetch("people.json").then(function (r) { return r.json(); }).then(function (d) {
+  fetch("people.json?v=avatars-100-20261022").then(function (r) { return r.json(); }).then(function (d) {
     var byId = {};
     d.people.forEach(function (p) { byId[p.id] = p; });
     var hero = HERO_IDS.map(function (id) { return byId[id]; }).filter(Boolean);

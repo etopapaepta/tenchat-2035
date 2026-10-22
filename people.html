@@ -42,6 +42,8 @@
   .chip { border: 1px solid #EEE6E6; background: #fff; color: #131316; }
   .chip.on { background: #EB2A2A; border-color: #EB2A2A; color: #fff; }
   .chips { scrollbar-width: none; } .chips::-webkit-scrollbar { display: none; }
+  .person-avatar { position: relative; display: grid; place-items: center; width: 72px; height: 72px; flex-shrink: 0; overflow: hidden; border-radius: 18px; font-size: 28px; box-shadow: inset 0 0 0 1px rgba(13,21,48,.06); }
+  .person-avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .pop { animation: pop .35s ease both; }
   @keyframes pop { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
   @media (prefers-reduced-motion: reduce) { .pop { animation: none; } .card:hover { transform: none; } }
@@ -78,7 +80,7 @@
     <div>
       <span class="inline-flex items-center gap-2 rounded-full border border-line bg-white px-3 py-1.5 text-xs font-semibold text-mute"><span class="h-2 w-2 rounded-full bg-match"></span>База ИИ-подбора · демо-профили</span>
       <h1 class="mt-4 font-display text-[34px] font-extrabold leading-tight sm:text-5xl">Люди, с которыми <span class="text-brand">ИИ знакомит прямо сейчас</span></h1>
-      <p class="mt-3 max-w-2xl text-lg text-mute">Каждый из них сам ищет деловые знакомства. Найдите своего человека — ИИ объяснит, зачем вам встретиться, и напишет первым. Профили вымышленные: так функция будет работать на реальных профилях TenChat.</p>
+      <p class="mt-3 max-w-2xl text-lg text-mute">Найдите своего человека — ИИ объяснит, зачем вам встретиться, и напишет первым. Профили вымышленные, портреты созданы ИИ.</p>
     </div>
     <div class="grid grid-cols-3 gap-3">
       <div class="card rounded-2xl p-4"><div id="statTotal" class="font-display text-3xl font-extrabold text-brand">100</div><div class="text-sm text-mute">человек</div></div>
@@ -160,6 +162,13 @@
   function norm(s) { return String(s).toLowerCase().replace(/ё/g, "е"); }
   function plural(n, a, b, c) { var m = n % 10, h = n % 100; return m === 1 && h !== 11 ? a : m >= 2 && m <= 4 && (h < 12 || h > 14) ? b : c; }
 
+  function avatar(p, tint) {
+    return '<span class="person-avatar" style="background:' + tint + '">' +
+      '<span aria-hidden="true">' + esc(p.e) + '</span>' +
+      (p.avatar ? '<img src="' + esc(p.avatar) + '" alt="ИИ-портрет: ' + esc(p.n) + '" width="72" height="72" loading="lazy" decoding="async" onerror="this.remove()">' : '') +
+      '</span>';
+  }
+
   function chips(el, items, current, attr) {
     el.innerHTML = items.map(function (it) {
       return '<button type="button" data-' + attr + '="' + esc(it[0]) + '" class="chip shrink-0 rounded-full px-3.5 py-2 text-sm font-medium ' + (it[0] === current ? "on" : "") + '">' + esc(it[1]) + "</button>";
@@ -172,7 +181,7 @@
     var ask = "Хочу познакомиться: " + p.n + " — " + p.r + ". Чем мы можем быть полезны друг другу?";
     return '<article class="card pop flex flex-col rounded-3xl p-5">' +
       '<div class="flex items-start gap-3">' +
-        '<span class="grid h-14 w-14 shrink-0 place-items-center rounded-2xl text-2xl" style="background:' + t[0] + '">' + esc(p.e) + "</span>" +
+        avatar(p, t[0]) +
         '<div class="min-w-0 flex-1"><div class="font-display text-[17px] font-extrabold leading-tight text-ink">' + esc(p.n) + '</div>' +
         '<div class="mt-1 text-sm leading-snug text-mute">' + esc(p.r) + "</div></div></div>" +
       '<div class="mt-3 flex flex-wrap items-center gap-2">' +
@@ -233,7 +242,7 @@
   document.getElementById("q").addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(apply, 150); });
   document.getElementById("more").addEventListener("click", more);
 
-  fetch("people.json").then(function (r) { return r.json(); }).then(function (d) {
+  fetch("people.json?v=avatars-100-20261022").then(function (r) { return r.json(); }).then(function (d) {
     data = d;
     document.getElementById("statTotal").textContent = d.people.length;
     document.getElementById("statTeam").textContent = d.people.filter(function (p) { return p.st === "Собираю команду"; }).length;
