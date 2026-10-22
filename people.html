@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Люди в боте · Tenchat2035</title>
+<meta name="description" content="191 профиль в 17 сферах, с которыми ИИ-агент Tenchat2035 знакомит прямо сейчас. Найдите человека и познакомьтесь через ИИ.">
+<link rel="icon" type="image/png" href="logo-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          display: ["Manrope", "system-ui", "sans-serif"],
+          sans: ["Inter", "system-ui", "-apple-system", "Segoe UI", "Roboto", "sans-serif"],
+        },
+        colors: {
+          ink: "#0D1530",
+          mute: "#5A6584",
+          line: "#E2E8F6",
+          paper: "#F5F8FF",
+          brand: { DEFAULT: "#2B5CF2", dark: "#1D43C9", soft: "#E8EEFF" },
+          aqua: { DEFAULT: "#18C2F2", soft: "#E3F8FE" },
+          violet: "#6D5DF5",
+          match: "#10B981",
+        },
+      },
+    },
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<style>
+  body { background: #F5F8FF; color: #0D1530; }
+  .card { background: rgba(255,255,255,.86); border: 1px solid #E2E8F6; box-shadow: 0 12px 34px -20px rgba(29,67,201,.28); transition: border-color .25s, box-shadow .25s, transform .25s; }
+  .card:hover { border-color: rgba(43,92,242,.45); box-shadow: 0 18px 40px -18px rgba(43,92,242,.4); transform: translateY(-2px); }
+  .btn-blue { background: linear-gradient(100deg, #2B5CF2, #18C2F2); color: #fff; box-shadow: 0 10px 26px -10px rgba(43,92,242,.7); transition: transform .2s; }
+  .btn-blue:hover { transform: translateY(-1px); }
+  .chip { border: 1px solid #E2E8F6; background: #fff; color: #0D1530; }
+  .chip.on { background: #0D1530; border-color: #0D1530; color: #fff; }
+  .chips { scrollbar-width: none; } .chips::-webkit-scrollbar { display: none; }
+  .pop { animation: pop .35s ease both; }
+  @keyframes pop { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .pop { animation: none; } .card:hover { transform: none; } }
+</style>
+</head>
+<body class="font-sans antialiased overflow-x-hidden">
+
+<header class="sticky top-0 z-50 border-b border-line bg-white/80 backdrop-blur-xl">
+  <div class="mx-auto flex h-[68px] max-w-7xl items-center justify-between gap-3 px-4 sm:px-6">
+    <a href="index.html" class="flex items-center gap-3">
+      <img src="logo-icon.png" alt="" width="40" height="40" class="h-10 w-10 rounded-xl">
+      <span class="hidden font-display text-[17px] font-extrabold tracking-tight sm:inline"><span class="text-ink">Tenchat</span><span class="text-brand">2035</span></span>
+    </a>
+    <nav class="flex items-center gap-1 whitespace-nowrap rounded-2xl border border-line bg-paper p-1 text-sm font-semibold">
+      <a href="index.html" class="rounded-xl px-3 py-2 text-mute hover:text-ink sm:px-4">Главная</a>
+      <span class="rounded-xl bg-white px-3 py-2 text-ink shadow-sm sm:px-4">Люди в боте</span>
+    </nav>
+    <a href="https://t.me/Tenchat2035bot" target="_blank" rel="noopener" class="btn-blue hidden items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold md:inline-flex">
+      <i data-lucide="send" class="h-4 w-4"></i>Открыть бота
+    </a>
+  </div>
+</header>
+
+<main class="mx-auto max-w-7xl px-4 pb-16 pt-8 sm:px-6">
+  <section class="grid items-end gap-6 lg:grid-cols-[1.3fr_.7fr]">
+    <div>
+      <span class="inline-flex items-center gap-2 rounded-full border border-line bg-white px-3 py-1.5 text-xs font-semibold text-mute"><span class="h-2 w-2 rounded-full bg-match"></span>База ИИ-подбора · демо-профили</span>
+      <h1 class="mt-4 font-display text-[34px] font-extrabold leading-tight sm:text-5xl">Люди, с которыми <span class="bg-gradient-to-r from-brand to-aqua bg-clip-text text-transparent">ИИ знакомит прямо сейчас</span></h1>
+      <p class="mt-3 max-w-2xl text-lg text-mute">Каждый из них сам ищет деловые знакомства. Найдите своего человека — ИИ объяснит, зачем вам встретиться, и напишет первым. Профили вымышленные: так функция будет работать на реальных профилях TenChat.</p>
+    </div>
+    <div class="grid grid-cols-3 gap-3">
+      <div class="card rounded-2xl p-4"><div id="statTotal" class="font-display text-3xl font-extrabold text-brand">191</div><div class="text-sm text-mute">профиль</div></div>
+      <div class="card rounded-2xl p-4"><div class="font-display text-3xl font-extrabold text-[#0EA5D0]">17</div><div class="text-sm text-mute">сфер</div></div>
+      <div class="card rounded-2xl p-4"><div id="statTeam" class="font-display text-3xl font-extrabold text-violet">0</div><div class="text-sm text-mute">собирают команду</div></div>
+    </div>
+  </section>
+
+  <section class="sticky top-[68px] z-40 -mx-4 mt-6 border-b border-line bg-paper/90 px-4 py-3 backdrop-blur sm:-mx-6 sm:px-6">
+    <div class="flex flex-col gap-3 lg:flex-row lg:items-center">
+      <label class="relative w-full lg:w-[440px] lg:shrink-0">
+        <i data-lucide="search" class="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-mute"></i>
+        <input id="q" type="search" placeholder="Профессия, навык или кого ищете: логопед, инвестор, дизайнер…" class="h-12 w-full rounded-2xl border border-line bg-white pl-12 pr-4 text-base text-ink outline-none focus:border-brand">
+      </label>
+      <div id="statuses" class="chips flex min-w-0 flex-1 gap-2 overflow-x-auto"></div>
+    </div>
+    <div id="spheres" class="chips mt-3 flex gap-2 overflow-x-auto"></div>
+  </section>
+
+  <p id="count" class="mt-5 text-sm font-medium text-mute"></p>
+  <div id="grid" class="mt-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+  <div class="mt-6 flex justify-center"><button id="more" type="button" class="chip hidden rounded-2xl px-6 py-3 font-semibold hover:border-brand">Показать ещё</button></div>
+  <div id="empty" class="card mt-4 hidden rounded-3xl p-8 text-center">
+    <div class="font-display text-xl font-extrabold">Такого человека пока нет в базе</div>
+    <p class="mt-2 text-mute">Не страшно: ИИ-агент предложит типаж специалиста, который вам нужен.</p>
+    <a id="emptyAsk" href="index.html" class="btn-blue mt-4 inline-flex items-center gap-2 rounded-2xl px-5 py-3 font-semibold"><i data-lucide="sparkles" class="h-5 w-5"></i>Спросить ИИ-агента</a>
+  </div>
+</main>
+
+<footer class="border-t border-line bg-white/60 py-6 text-center text-sm text-mute">
+  Tenchat2035 · Кейс №1 TenChat · Команда Da BOSS'ы · Профили на этой странице вымышлены для демонстрации подбора
+</footer>
+
+<script>
+  var BOT = "https://t.me/Tenchat2035bot";
+  var PAGE = 24;
+  var TINT = {
+    education: ["#E8EEFF", "#2B5CF2"], psy: ["#EEEBFF", "#6D5DF5"], health: ["#E6F8F1", "#10B981"], it: ["#E3F8FE", "#0EA5D0"],
+    design: ["#FDEBF4", "#D9468F"], marketing: ["#FFF3E3", "#E0820B"], media: ["#EEEBFF", "#6D5DF5"], finance: ["#E6F8F1", "#0F9F6E"],
+    law: ["#E8EEFF", "#1D43C9"], hr: ["#FFF3E3", "#C76E06"], science: ["#E3F8FE", "#0B8FB8"], industry: ["#EEF1F6", "#4A5670"],
+    build: ["#FFF0E8", "#D35A1E"], creative: ["#FDEBF4", "#C23B7E"], sport: ["#E6F8F1", "#0F9F6E"], services: ["#FFF3E3", "#C76E06"], gov: ["#E8EEFF", "#2B5CF2"]
+  };
+  var data, list = [], shown = 0, sphere = "", status = "";
+
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+  function norm(s) { return String(s).toLowerCase().replace(/ё/g, "е"); }
+  function plural(n, a, b, c) { var m = n % 10, h = n % 100; return m === 1 && h !== 11 ? a : m >= 2 && m <= 4 && (h < 12 || h > 14) ? b : c; }
+
+  function chips(el, items, current, attr) {
+    el.innerHTML = items.map(function (it) {
+      return '<button type="button" data-' + attr + '="' + esc(it[0]) + '" class="chip shrink-0 rounded-full px-3.5 py-2 text-sm font-medium ' + (it[0] === current ? "on" : "") + '">' + esc(it[1]) + "</button>";
+    }).join("");
+  }
+
+  function card(p) {
+    var t = TINT[p.s] || TINT.it;
+    var first = p.n.split(" ")[0];
+    var ask = "Хочу познакомиться: " + p.n + " — " + p.r + ". Чем мы можем быть полезны друг другу?";
+    return '<article class="card pop flex flex-col rounded-3xl p-5">' +
+      '<div class="flex items-start gap-3">' +
+        '<span class="grid h-14 w-14 shrink-0 place-items-center rounded-2xl text-2xl" style="background:' + t[0] + '">' + esc(p.e) + "</span>" +
+        '<div class="min-w-0 flex-1"><div class="font-display text-[17px] font-extrabold leading-tight text-ink">' + esc(p.n) + '</div>' +
+        '<div class="mt-1 text-sm leading-snug text-mute">' + esc(p.r) + "</div></div></div>" +
+      '<div class="mt-3 flex flex-wrap items-center gap-2">' +
+        '<span class="inline-flex items-center gap-1.5 rounded-full bg-[#E6F8F1] px-2.5 py-1 text-xs font-semibold text-[#0B7A55]"><span class="h-1.5 w-1.5 rounded-full bg-match"></span>' + esc(p.st) + "</span>" +
+        '<span class="rounded-full px-2.5 py-1 text-xs font-semibold" style="background:' + t[0] + ";color:" + t[1] + '">' + esc(data.spheres[p.s] || "") + "</span></div>" +
+      '<p class="mt-3 flex-1 text-sm text-ink/80"><b class="font-semibold text-ink">Ищет:</b> ' + esc(p.l) + "</p>" +
+      '<div class="mt-4 grid grid-cols-[1fr_auto] gap-2">' +
+        '<a href="index.html?ask=' + encodeURIComponent(ask) + '" class="btn-blue inline-flex items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-sm font-semibold"><i data-lucide="sparkles" class="h-4 w-4"></i>Познакомиться через ИИ</a>' +
+        '<a href="' + BOT + '" target="_blank" rel="noopener" aria-label="Открыть бота в Telegram, чтобы познакомиться с ' + esc(first) + '" class="chip grid h-[42px] w-[42px] place-items-center rounded-xl hover:border-brand"><i data-lucide="send" class="h-4 w-4 text-brand"></i></a>' +
+      "</div></article>";
+  }
+
+  function apply() {
+    var q = norm(document.getElementById("q").value.trim());
+    var words = q.split(/\s+/).filter(Boolean).map(function (w) { return w.length > 5 ? w.slice(0, w.length - 2) : w; });
+    list = data.people.filter(function (p) {
+      if (sphere && p.s !== sphere) return false;
+      if (status && p.st !== status) return false;
+      if (!words.length) return true;
+      var hay = norm([p.n, p.r, p.l, p.st, data.spheres[p.s]].join(" "));
+      return words.every(function (w) { return hay.indexOf(w) !== -1; });
+    });
+    shown = 0;
+    document.getElementById("grid").innerHTML = "";
+    var n = list.length;
+    document.getElementById("count").textContent = n ? "Найдено: " + n + " " + plural(n, "человек", "человека", "человек") : "";
+    document.getElementById("empty").classList.toggle("hidden", n > 0);
+    document.getElementById("emptyAsk").href = "index.html?ask=" + encodeURIComponent("Мне нужен " + (q || "специалист") + ". Кого посоветуешь?");
+    more();
+  }
+
+  function more() {
+    var next = list.slice(shown, shown + PAGE);
+    document.getElementById("grid").insertAdjacentHTML("beforeend", next.map(card).join(""));
+    shown += next.length;
+    document.getElementById("more").classList.toggle("hidden", shown >= list.length);
+    lucide.createIcons();
+  }
+
+  function renderFilters() {
+    var counts = {};
+    data.people.forEach(function (p) { counts[p.s] = (counts[p.s] || 0) + 1; });
+    chips(document.getElementById("spheres"), [["", "Все сферы"]].concat(Object.keys(data.spheres).filter(function (k) { return counts[k]; }).map(function (k) { return [k, data.spheres[k] + " · " + counts[k]]; })), sphere, "sphere");
+    var sts = [];
+    data.people.forEach(function (p) { if (sts.indexOf(p.st) === -1) sts.push(p.st); });
+    chips(document.getElementById("statuses"), [["", "Любой статус"]].concat(sts.map(function (s) { return [s, s]; })), status, "status");
+  }
+
+  document.getElementById("spheres").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-sphere]"); if (!b) return;
+    sphere = b.getAttribute("data-sphere"); renderFilters(); apply();
+  });
+  document.getElementById("statuses").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-status]"); if (!b) return;
+    status = b.getAttribute("data-status"); renderFilters(); apply();
+  });
+  var timer;
+  document.getElementById("q").addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(apply, 150); });
+  document.getElementById("more").addEventListener("click", more);
+
+  fetch("people.json").then(function (r) { return r.json(); }).then(function (d) {
+    data = d;
+    document.getElementById("statTotal").textContent = d.people.length;
+    document.getElementById("statTeam").textContent = d.people.filter(function (p) { return p.st === "Собираю команду"; }).length;
+    renderFilters();
+    apply();
+  }).catch(function () {
+    document.getElementById("count").textContent = "Не удалось загрузить профили. Обновите страницу.";
+  });
+  lucide.createIcons();
+</script>
+</body>
+</html>

@@ -107,6 +107,7 @@
       <a class="hover:text-brand" href="#trust">Доверие</a>
       <a class="hover:text-brand" href="#effect">Эффект</a>
       <a class="hover:text-brand" href="#team">Команда</a>
+      <a class="inline-flex items-center gap-1.5 rounded-lg bg-brand-soft px-2.5 py-1 font-semibold text-brand hover:bg-brand hover:text-white" href="people.html"><span class="h-1.5 w-1.5 rounded-full bg-match"></span>Люди в боте</a>
       <a class="hover:text-brand" href="#faq">Вопросы</a>
     </nav>
     <div class="flex items-center gap-2">
@@ -131,6 +132,7 @@
       <a class="rounded-lg px-3 py-2 hover:bg-brand-soft" href="#trust">Доверие и ИИ</a>
       <a class="rounded-lg px-3 py-2 hover:bg-brand-soft" href="#effect">Эффект</a>
       <a class="rounded-lg px-3 py-2 hover:bg-brand-soft" href="#team">Команда</a>
+      <a class="rounded-lg px-3 py-2 font-semibold text-brand hover:bg-brand-soft" href="people.html">🟢 Люди в боте</a>
       <a class="rounded-lg px-3 py-2 hover:bg-brand-soft" href="#faq">Вопросы</a>
       <a href="https://t.me/Tenchat2035bot" target="_blank" rel="noopener" class="btn-blue mt-2 inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 font-semibold">
         <i data-lucide="send" class="h-4 w-4"></i>Открыть @Tenchat2035bot
@@ -148,7 +150,7 @@
     <div class="reveal">
       <span class="inline-flex flex-wrap items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-xs font-medium text-mute shadow-sm sm:text-sm">
         <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-aqua animate-ping2"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-aqua"></span></span>
-        Всероссийский ИИ-хакатон 2026 • Будущее деловых связей (2.5+ млн пользователей)
+        Всероссийский ИИ-хакатон 2026 • Будущее деловых связей (5+ млн пользователей)
       </span>
       <h1 class="mt-5 font-display text-[36px] font-extrabold leading-[1.06] tracking-tight text-ink sm:text-5xl lg:text-[62px]">
         Деловые знакомства <span class="text-grad">без холодных писем</span> и страха отказа
@@ -213,7 +215,7 @@
   </div>
   <div class="mx-auto max-w-7xl px-4 pb-4 sm:px-6">
     <div class="reveal grid grid-cols-2 gap-3 rounded-3xl border border-line bg-white/70 p-3 backdrop-blur md:grid-cols-4">
-      <div class="rounded-2xl bg-paper px-4 py-3"><div class="font-display text-2xl font-extrabold text-brand sm:text-3xl">191</div><div class="text-sm text-mute">профиль в базе бота</div></div>
+      <a href="people.html" class="rounded-2xl bg-paper px-4 py-3 transition hover:bg-brand-soft"><div class="font-display text-2xl font-extrabold text-brand sm:text-3xl">191</div><div class="text-sm text-mute">профиль в базе бота →</div></a>
       <div class="rounded-2xl bg-paper px-4 py-3"><div class="font-display text-2xl font-extrabold text-[#0EA5D0] sm:text-3xl">17</div><div class="text-sm text-mute">сфер: от школы до стройки</div></div>
       <div class="rounded-2xl bg-paper px-4 py-3"><div class="font-display text-2xl font-extrabold text-violet sm:text-3xl">~3 мин</div><div class="text-sm text-mute">от рассказа о себе до знакомства</div></div>
       <div class="rounded-2xl bg-paper px-4 py-3"><div class="font-display text-2xl font-extrabold text-match sm:text-3xl">0 ₽</div><div class="text-sm text-mute">бот бесплатный, без регистрации</div></div>
@@ -314,6 +316,7 @@
         <div class="grid h-11 w-11 place-items-center rounded-2xl bg-brand-soft text-brand"><i data-lucide="layers-3" class="h-5 w-5"></i></div>
         <h3 class="mt-4 font-display text-lg font-extrabold text-ink">17 сфер, ~190 профилей</h3>
         <p class="mt-1.5 text-sm text-mute">От логопеда до инженера. Нет подходящего — ИИ предложит типаж специалиста.</p>
+        <a href="people.html" class="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-brand hover:underline">Смотреть всех людей →</a>
       </article>
       <article class="reveal card card-hover rounded-3xl p-6">
         <div class="grid h-11 w-11 place-items-center rounded-2xl bg-aqua-soft text-[#0EA5D0]"><i data-lucide="users-round" class="h-5 w-5"></i></div>
@@ -850,6 +853,14 @@
     agentInput.style.height = "";
     agentInput.style.height = Math.min(agentInput.scrollHeight, 112) + "px";
   });
+
+  try {
+    var askParam = new URLSearchParams(location.search).get("ask");
+    if (askParam) {
+      history.replaceState(null, "", location.pathname);
+      setTimeout(function () { openAgent(); ask(askParam.slice(0, 1000)); }, 400);
+    }
+  } catch (e) {}
 
   renderTabs();
   renderSim();
