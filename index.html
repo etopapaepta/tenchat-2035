@@ -195,7 +195,8 @@
     <span class="absolute bottom-0.5 right-0.5 h-4 w-4 rounded-full border-[3px] border-white bg-match"></span>
   </button>
 </div>
-<section id="agentPanel" class="closed fixed inset-x-2 bottom-2 z-[70] flex h-[min(620px,calc(100dvh-16px))] flex-col overflow-hidden rounded-[26px] border border-line bg-white shadow-2xl shadow-brand/25 sm:inset-x-auto sm:bottom-6 sm:right-6 sm:w-[400px]" role="dialog" aria-label="ИИ-агент Tenchat2035" aria-hidden="true">
+<div id="agentBackdrop" class="fixed inset-0 z-[65] hidden bg-ink/30 backdrop-blur-[2px]" aria-hidden="true"></div>
+<section id="agentPanel" class="closed fixed inset-0 z-[70] flex flex-col overflow-hidden bg-white shadow-2xl shadow-ink/30 sm:inset-auto sm:bottom-4 sm:right-4 sm:top-4 sm:w-[min(50vw,760px)] sm:min-w-[440px] sm:rounded-[28px] sm:border sm:border-line" role="dialog" aria-label="ИИ-агент Tenchat2035" aria-hidden="true">
   <header class="flex items-center gap-3 bg-brand px-4 py-3 text-white">
     <img src="logo-icon-red.png" alt="" width="40" height="40" class="h-10 w-10 rounded-full bg-white object-contain p-1">
     <div class="min-w-0 flex-1 leading-tight">
@@ -204,7 +205,7 @@
     </div>
     <button id="agentClose" type="button" aria-label="Закрыть" class="grid h-9 w-9 place-items-center rounded-full hover:bg-white/20"><i data-lucide="x" class="h-5 w-5"></i></button>
   </header>
-  <div id="agentLog" class="flex-1 space-y-3 overflow-y-auto bg-[#F6F1F1] px-3 py-4 text-[14px] leading-snug" aria-live="polite"></div>
+  <div id="agentLog" class="flex-1 space-y-3 overflow-y-auto bg-[#F6F1F1] px-4 py-5 text-[15px] leading-relaxed sm:px-6" aria-live="polite"></div>
   <div id="agentChips" class="flex gap-2 overflow-x-auto border-t border-line bg-white px-3 pt-3"></div>
   <form id="agentForm" class="flex items-end gap-2 bg-white p-3">
     <textarea id="agentInput" rows="1" maxlength="1000" placeholder="Напиши о себе или спроси…" class="max-h-28 min-h-[44px] flex-1 resize-none rounded-2xl border border-line bg-paper px-4 py-2.5 text-base text-ink outline-none focus:border-brand"></textarea>
@@ -366,8 +367,11 @@
     }).join("");
     agentChips.classList.toggle("hidden", !agentChips.innerHTML);
   }
+  var agentBackdrop = document.getElementById("agentBackdrop");
   function openAgent() {
     agentPanel.classList.remove("closed");
+    agentBackdrop.classList.remove("hidden");
+    document.documentElement.style.overflow = "hidden";
     agentPanel.setAttribute("aria-hidden", "false");
     agentFab.classList.add("hidden");
     agentTeaser.classList.add("hidden");
@@ -377,6 +381,8 @@
   }
   function closeAgent() {
     agentPanel.classList.add("closed");
+    agentBackdrop.classList.add("hidden");
+    document.documentElement.style.overflow = "";
     agentPanel.setAttribute("aria-hidden", "true");
     agentFab.classList.remove("hidden");
   }
@@ -454,6 +460,7 @@
     if (e.target.closest("[data-open-agent]")) { e.preventDefault(); openAgent(); }
   });
   document.getElementById("agentClose").addEventListener("click", closeAgent);
+  agentBackdrop.addEventListener("click", closeAgent);
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeAgent(); });
   agentChips.addEventListener("click", function (e) {
     var b = e.target.closest("button");
