@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Подбор людей · Tenchat2035</title>
+<meta name="description" content="ИИ подбирает коллег и людей для вашего проекта: процент совпадения, взаимная польза и первое сообщение от ИИ.">
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<link rel="alternate icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="logo-icon-new.png">
+<meta property="og:image" content="logo-icon-new.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          display: ["Inter", "system-ui", "sans-serif"],
+          sans: ["Inter", "system-ui", "-apple-system", "Segoe UI", "Roboto", "sans-serif"],
+        },
+        colors: {
+          ink: "#1F2433",
+          mute: "#4B5163",
+          line: "#E9EBF0",
+          paper: "#F5F6F8",
+          slate: "#2B3242",
+          brand: { DEFAULT: "#EB2A2A", dark: "#C81E1E", soft: "#FDECEC" },
+          aqua: { DEFAULT: "#FF6B5E", soft: "#FFF1EE" },
+          violet: "#8E1B3A",
+          match: "#10B981",
+        },
+        keyframes: { ping2: { "0%": { transform: "scale(1)", opacity: ".7" }, "100%": { transform: "scale(2.4)", opacity: "0" } } },
+        animation: { ping2: "ping2 1.8s cubic-bezier(0,0,.2,1) infinite" },
+      },
+    },
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<style>
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body { background: #FFFFFF; color: #1F2433; }
+  .btn-red, .btn-blue { background: #EB2A2A; color: #fff; transition: background .2s, transform .2s; }
+  .btn-red:hover, .btn-blue:hover { background: #D81F1F; }
+  .btn-dark { background: #2B3242; color: #fff; transition: background .2s; }
+  .btn-dark:hover { background: #1F2433; }
+  .box { background: #fff; border: 1px solid #E9EBF0; border-radius: 24px; }
+  .rail { scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .rail::-webkit-scrollbar { display: none; }
+  .rail > * { scroll-snap-align: start; }
+  .pcard { background: radial-gradient(120% 80% at 50% 0%, #3A3F4D 0%, #1F2433 60%, #151821 100%); }
+  .fade-swap { animation: fadeSwap .4s ease both; }
+  @keyframes fadeSwap { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  #agentPanel { transition: opacity .2s ease, transform .2s ease; }
+  #agentPanel.closed { opacity: 0; transform: translateY(12px) scale(.98); pointer-events: none; }
+  .teaser { position: relative; animation: teaserIn .35s cubic-bezier(.2,.9,.3,1.2) both; }
+  @keyframes teaserIn { from { opacity: 0; transform: translateY(10px) scale(.92); } to { opacity: 1; transform: none; } }
+  #agentChips { scrollbar-width: none; } #agentChips::-webkit-scrollbar { display: none; }
+  .typing span { display: inline-block; width: 6px; height: 6px; margin: 0 1.5px; border-radius: 9999px; background: #EB2A2A; animation: blink 1.2s infinite both; }
+  .typing span:nth-child(2) { animation-delay: .2s; } .typing span:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: .25; } 40% { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .fade-swap, .teaser, .animate-ping2 { animation: none !important; } }
+  .fade-up { animation: fadeUp .45s ease both; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .bar { transition: width 1s ease; }
+  @media (prefers-reduced-motion: reduce) { .fade-up { animation: none; } .bar { transition: none; } }
+</style>
+</head>
+<body class="font-sans antialiased overflow-x-hidden">
+
+<header class="sticky top-0 z-50 border-b border-line bg-white/90 backdrop-blur">
+  <div class="mx-auto flex h-[72px] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
+    <a href="index.html" class="flex items-center gap-2.5">
+      <img src="logo.svg" alt="" width="40" height="40" class="h-10 w-10 rounded-xl">
+      <span class="text-[20px] font-extrabold tracking-tight text-ink sm:text-[22px]">Tenchat<span class="text-brand">2035</span></span>
+    </a>
+    <nav class="hidden items-center gap-8 text-[15px] font-medium text-ink lg:flex">
+      <a class="hover:text-brand" href="index.html#how">Как работает</a>
+      <a class="hover:text-brand" href="people.html">Люди в боте</a>
+      <a class="hover:text-brand" href="index.html#unique">Отличия</a>
+      <a class="hover:text-brand" href="index.html#team">Команда</a>
+    </nav>
+    <div class="flex items-center gap-2">
+      <a href="index.html" class="btn-dark hidden rounded-full px-5 py-2.5 text-[15px] font-semibold md:inline-flex">На главную</a>
+      <a href="https://t.me/Tenchat2035bot" target="_blank" rel="noopener" class="btn-red whitespace-nowrap rounded-full px-4 py-2.5 text-[15px] font-semibold sm:px-5">Открыть бота</a>
+    </div>
+  </div>
+</header>
+
+<main class="mx-auto max-w-6xl px-4 pb-16 pt-8 sm:px-6">
+
+  <!-- Шаги пути -->
+  <ol id="steps" class="grid grid-cols-2 gap-2 text-sm font-semibold sm:grid-cols-4">
+    <li data-step="1" class="step flex items-center gap-2 rounded-2xl border border-line px-3 py-2.5"><span class="num grid h-7 w-7 shrink-0 place-items-center rounded-full bg-paper text-xs">1</span>Кто я</li>
+    <li data-step="2" class="step flex items-center gap-2 rounded-2xl border border-line px-3 py-2.5"><span class="num grid h-7 w-7 shrink-0 place-items-center rounded-full bg-paper text-xs">2</span>Кого ищу</li>
+    <li data-step="3" class="step flex items-center gap-2 rounded-2xl border border-line px-3 py-2.5"><span class="num grid h-7 w-7 shrink-0 place-items-center rounded-full bg-paper text-xs">3</span>Почему знакомиться</li>
+    <li data-step="4" class="step flex items-center gap-2 rounded-2xl border border-line px-3 py-2.5"><span class="num grid h-7 w-7 shrink-0 place-items-center rounded-full bg-paper text-xs">4</span>ИИ пишет первым</li>
+  </ol>
+
+  <!-- Запрос -->
+  <form id="qForm" class="box mt-6 flex items-center gap-2 p-2 shadow-sm">
+    <input id="q" type="text" maxlength="300" placeholder="Я дизайнер, ищу команду для стартапа" class="h-12 min-w-0 flex-1 bg-transparent px-4 text-[17px] text-ink outline-none placeholder:text-mute/70">
+    <button type="submit" class="btn-red shrink-0 rounded-2xl px-5 py-3.5 text-[16px] font-bold sm:px-7">Подобрать</button>
+  </form>
+
+  <!-- ИИ думает -->
+  <section id="thinking" class="box mt-6 hidden p-6 sm:p-8">
+    <div class="flex items-center gap-3 text-lg font-bold text-ink"><span class="relative flex h-3 w-3"><span class="absolute inline-flex h-full w-full rounded-full bg-brand animate-ping2"></span><span class="relative inline-flex h-3 w-3 rounded-full bg-brand"></span></span>ИИ подбирает людей</div>
+    <ul id="thinkList" class="mt-5 space-y-3 text-[16px] text-mute"></ul>
+  </section>
+
+  <!-- Результаты -->
+  <section id="results" class="hidden">
+    <div id="profile" class="mt-6 flex flex-wrap items-center gap-2 text-[15px]"></div>
+    <div id="aiNote" class="box mt-4 hidden border-brand/30 bg-brand-soft/40 p-5 text-[16px] leading-relaxed text-ink"></div>
+
+    <h2 class="mt-10 text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">Коллеги по профессии</h2>
+    <p class="mt-1 text-mute">Обменяться опытом и делать проекты вместе.</p>
+    <div id="colleagues" class="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3"></div>
+
+    <h2 class="mt-12 text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">Кто усилит ваш проект</h2>
+    <p class="mt-1 text-mute">Люди, которые сами ищут таких, как вы, — интерес взаимный.</p>
+    <div id="boost" class="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3"></div>
+
+    <div class="mt-12 flex flex-col items-center gap-4 rounded-[28px] bg-paper p-8 text-center sm:flex-row sm:justify-between sm:text-left">
+      <div>
+        <div class="text-xl font-extrabold text-ink">Хотите настоящие знакомства?</div>
+        <p class="mt-1 text-mute">В Telegram-боте ИИ сам напишет выбранному человеку и откроет контакты, когда вы оба согласитесь.</p>
+      </div>
+      <a href="https://t.me/Tenchat2035bot" target="_blank" rel="noopener" class="btn-red shrink-0 rounded-full px-7 py-3.5 font-bold">Открыть @Tenchat2035bot</a>
+    </div>
+  </section>
+</main>
+
+<!-- Шаг 4: письмо от ИИ -->
+<div id="invite" class="fixed inset-0 z-[80] hidden items-end justify-center bg-ink/40 p-0 backdrop-blur-[2px] sm:items-center sm:p-6" role="dialog" aria-modal="true" aria-labelledby="inviteTitle">
+  <div class="w-full max-w-xl overflow-hidden rounded-t-[28px] bg-white shadow-2xl sm:rounded-[28px]">
+    <div class="flex items-center justify-between border-b border-line px-6 py-4">
+      <div id="inviteTitle" class="text-lg font-extrabold text-ink">Шаг 4 · ИИ пишет первым</div>
+      <button id="inviteClose" type="button" aria-label="Закрыть" class="grid h-9 w-9 place-items-center rounded-full hover:bg-paper"><i data-lucide="x" class="h-5 w-5"></i></button>
+    </div>
+    <div class="p-6">
+      <div id="inviteWho" class="flex items-center gap-3"></div>
+      <div class="mt-5 text-sm font-bold uppercase tracking-wider text-mute">Это сообщение получит человек</div>
+      <div id="inviteText" class="mt-2 rounded-2xl rounded-bl-md bg-paper p-4 text-[16px] leading-relaxed text-ink"></div>
+      <ul class="mt-5 space-y-2 text-[15px] text-ink">
+        <li class="flex gap-2"><i data-lucide="eye-off" class="mt-0.5 h-5 w-5 shrink-0 text-brand"></i>Ваше имя человек увидит только после согласия.</li>
+        <li class="flex gap-2"><i data-lucide="handshake" class="mt-0.5 h-5 w-5 shrink-0 text-brand"></i>Согласны оба — открываются контакты, чат и план проекта.</li>
+        <li class="flex gap-2"><i data-lucide="shield-check" class="mt-0.5 h-5 w-5 shrink-0 text-brand"></i>Откажет — вы об этом не узнаете, ИИ предложит следующего.</li>
+      </ul>
+      <div class="mt-6 grid gap-2 sm:grid-cols-2">
+        <a href="https://t.me/Tenchat2035bot" target="_blank" rel="noopener" class="btn-red rounded-full px-5 py-3.5 text-center font-bold">Отправить через бота</a>
+        <button id="inviteOther" type="button" class="btn-dark rounded-full px-5 py-3.5 font-bold">Выбрать другого</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="border-t border-line py-6 text-center text-sm text-mute">
+  Всероссийский ИИ-хакатон МЭШ 2026 · Кейс №1 TenChat · Команда Da BOSS'ы, № 16 · Профили демонстрационные
+</footer>
+
+<script>
+  // Типографика: короткие слова и числа не висят в конце строки, тире не переносится в начало
+  (function () {
+    var SKIP = { SCRIPT: 1, STYLE: 1, TEXTAREA: 1, INPUT: 1, CODE: 1 };
+    // после короткого слова — только обычный пробел: \s в JS ловит и неразрывный
+    var SHORT = /(^|[\s(«"—–])([А-Яа-яЁёA-Za-z]{1,2}|\d+)[ \t\n\r]+(?=[^\s—–])/g;
+    function fix(t) {
+      for (var i = 0; i < 4; i++) {
+        var next = t.replace(SHORT, "$1$2\u00A0");
+        if (next === t) break;
+        t = next;
+      }
+      return t.replace(/[ \t\n\r]+([—–])(?=\s)/g, "\u00A0$1");
+    }
+    function fixNode(n) {
+      if (!n.parentNode || SKIP[n.parentNode.nodeName]) return;
+      var v = fix(n.nodeValue);
+      if (v !== n.nodeValue) n.nodeValue = v;
+    }
+    function walk(root) {
+      if (root.nodeType === 3) return fixNode(root);
+      if (root.nodeType !== 1 || SKIP[root.nodeName]) return;
+      var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null), n, list = [];
+      while ((n = w.nextNode())) list.push(n);
+      list.forEach(fixNode);
+    }
+    walk(document.body);
+    new MutationObserver(function (ms) {
+      ms.forEach(function (m) { m.addedNodes.forEach(walk); });
+    }).observe(document.body, { childList: true, subtree: true });
+  })();
+</script>
+
+<script>
+  var DICT = {"spheres": {"education": {"label": "Образование", "words": ["учител", "педагог", "преподава", "репетитор", "школ", "методист", "воспитател", "лектор", "курс", "директор школ", "завуч", "вожат", "детский сад"]}, "psy": {"label": "Психология и коррекция", "words": ["психолог", "психотерапевт", "логопед", "дефектолог", "нейропсихолог", "тьютор", "коррекц", "арт-терапев", "овз", "аутизм", "профориент", "семейный психолог"]}, "health": {"label": "Медицина и здоровье", "words": ["врач", "медик", "медсестр", "нутрициолог", "диетолог", "стоматолог", "терапевт", "клиник", "здоров", "фельдшер", "педиатр", "фармацевт", "аптек", "реабилитолог", "кардиолог", "медицин", "невролог", "ветеринар", "хирург", "офтальмолог", "гинеколог", "дерматолог", "массаж", "остеопат"]}, "it": {"label": "IT и продукт", "words": ["разработчик", "программист", "frontend", "backend", "фронтенд", "бэкенд", "devops", "аналитик данных", "продакт", "тестировщик", "айти", "data scien", "машинн", "геймдев", "игр", "кибербез", "сисадмин", "системный администратор", "системный аналитик", "1с", "ios", "android", "devops-инженер"]}, "design": {"label": "Дизайн", "words": ["дизайнер", "иллюстратор", "ux", "ui", "motion", "график", "айдентик", "figma", "3d", "веб-дизайн", "гейм-дизайн", "промышленный дизайн", "презентаци"]}, "marketing": {"label": "Маркетинг, продажи и PR", "words": ["маркетолог", "smm", "таргет", "продаж", "копирайтер", "реклам", "продвижен", "бренд", "pr-", "пиар", "ивент", "event", "мероприят", "seo", "маркетплейс", "wildberries", "ozon"]}, "media": {"label": "Медиа и журналистика", "words": ["журналист", "редактор", "блогер", "подкаст", "сценарист", "корреспондент", "медиа", "издани", "ведущ", "переводчик", "корректор", "youtube", "ютуб"]}, "finance": {"label": "Экономика и финансы", "words": ["финанс", "бухгалтер", "инвестор", "экономист", "экономик", "аудитор", "бизнес-ангел", "налог", "банк", "кредит", "бюджет", "страхов", "инвест", "тендер", "госзакуп"]}, "law": {"label": "Право", "words": ["юрист", "адвокат", "нотариус", "правов", "юридич", "патент", "медиатор"]}, "hr": {"label": "HR и управление", "words": ["hr", "эйчар", "рекрутер", "кадр", "найм", "менеджер проект", "проектный менеджер", "директор по", "руководител", "управлен", "коуч", "бизнес-тренер", "предпринимател", "собственник", "карьерн", "охран труда", "охрана труда", "обучение персонал", "охране труда"]}, "science": {"label": "Наука и исследования", "words": ["учён", "ученый", "исследовател", "наук", "лаборатор", "биолог", "химик", "физик", "социолог", "историк", "эколог", "аспирант", "генетик", "астроном", "астрофиз", "архив"]}, "industry": {"label": "Инженерия, производство и агро", "words": ["инженер", "конструктор", "технолог", "производств", "завод", "энергетик", "робототехн", "фермер", "агроном", "логист", "электрик", "бпла", "дрон", "3d-печат", "мебел"]}, "build": {"label": "Строительство и ремонт", "words": ["строител", "прораб", "ремонт", "архитектор", "дизайнер интерьер", "инженер-строит", "сметчик", "риелтор", "недвижим", "ландшафт", "девелоп", "bim", "умный дом", "умного дома", "ландшафтн"]}, "creative": {"label": "Творчество и культура", "words": ["фотограф", "видеограф", "монтаж", "музыкант", "саунд", "режиссёр", "актёр", "актер", "писател", "художник", "хореограф", "театр", "музей", "вокал", "керамист", "керамик", "мультипликат"]}, "sport": {"label": "Спорт и фитнес", "words": ["тренер", "фитнес", "йог", "спорт", "инструктор", "футбол", "тренировк", "киберспорт", "плаван", "шахмат", "единоборств", "бокс", "дзюдо"]}, "services": {"label": "Сервис, туризм, красота и еда", "words": ["повар", "шеф", "кафе", "ресторан", "бариста", "кофейн", "салон", "мастер маникюр", "парикмахер", "косметолог", "визажист", "туризм", "турагент", "гид", "отел", "кондитер", "флорист", "автосервис", "стилист", "клининг", "свадеб", "ателье", "портн", "грумер", "кинолог"]}, "gov": {"label": "Госслужба и НКО", "words": ["госслуж", "чиновник", "администрац", "муниципал", "нко", "фонд", "благотвор", "волонтёр", "волонтер", "социальн", "молодёжн", "грант", "библиот", "экскурсовод", "центр занятост"]}}, "stop": ["хочу", "ищу", "опыт", "опыта", "опытом", "работы", "работаю", "работать", "лет", "года", "годами", "проект", "проекта", "своих", "свой", "свою", "своё", "нужен", "нужны", "нужна", "нужно", "которые", "который", "человек", "люди", "людей", "специалист", "специалистов", "молодых", "молодые", "молодой", "очень", "также", "чтобы", "этого", "есть", "буду", "могу"]};
+  var AGENT_URL = "https://tenchat-2035.petyavoorhees2020.workers.dev/chat";
+  var data = null, current = null;
+
+  function esc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+  function low(t) { return String(t || "").toLowerCase().replace(/ё/g, "е"); }
+  var STOP = {};
+  DICT.stop.forEach(function (w) { STOP[w] = 1; });
+  // Основы слов, как в боте: первые 6 букв, без служебных слов
+  function stems(text) {
+    var out = [];
+    low(text).split(/[^a-zа-я0-9-]+/).forEach(function (w) {
+      if (w.length >= 4 && !STOP[w]) { var s = w.slice(0, 6); if (out.indexOf(s) === -1) out.push(s); }
+    });
+    return out;
+  }
+  // Сфера — по первой профессии в тексте, как в боте
+  function detectSphere(text) {
+    var t = low(text).replace(/школьни\S*|студент\S*/g, "");
+    var best = null, at = Infinity, len = 0;
+    Object.keys(DICT.spheres).forEach(function (id) {
+      DICT.spheres[id].words.forEach(function (w) {
+        var i = t.indexOf(w);
+        if (i >= 0 && (i < at || (i === at && w.length > len))) { best = id; at = i; len = w.length; }
+      });
+    });
+    return best;
+  }
+  // «Я дизайнер, ищу команду» → кто я / кого ищу
+  function parse(q) {
+    var m = q.match(/^(.*?)(?:,?\s*(?:и\s+)?(?:ищу|нужен|нужна|нужно|нужны|хочу найти|хочу познакомиться с|ищем)\s+)(.+)$/i);
+    var about = m ? m[1].trim() : q.trim();
+    var need = m ? m[2].trim() : "";
+    about = about.replace(/^я\s+/i, "");
+    return { about: about || q, need: need, sphere: detectSphere(about || q) || detectSphere(q) };
+  }
+  function first(n) { return String(n).split(" ")[0]; }
+  function lowerFirst(t) { t = String(t || ""); return t.charAt(0).toLowerCase() + t.slice(1); }
+
+  function rank(me) {
+    var wanted = stems(me.need || me.about);
+    var own = stems(me.about);
+    return data.people.map(function (p) {
+      var role = low(p.r), rest = low(p.l + " " + p.st);
+      var w = 0, s = 0;
+      wanted.forEach(function (x) { w += role.indexOf(x) >= 0 ? 4 : rest.indexOf(x) >= 0 ? 1 : 0; });
+      own.forEach(function (x) { s += role.indexOf(x) >= 0 ? 2 : rest.indexOf(x) >= 0 ? 1 : 0; });
+      // взаимность: человек сам ищет кого-то вроде пользователя
+      var mutual = 0;
+      own.forEach(function (x) { if (low(p.l).indexOf(x) >= 0) mutual += 2; });
+      if (me.sphere && p.s === me.sphere) s += 2;
+      return { p: p, s: s, w: w, mutual: mutual };
+    });
+  }
+  // Процент: сила совпадения, минус место в списке, плюс небольшой разброс по человеку
+  function score(x, i) { return Math.max(71, Math.min(97, 74 + (x.s + x.w + x.mutual) * 3 - i * 4 + (x.p.id % 3))); }
+
+  function pick(me) {
+    var all = rank(me), taken = {};
+    var col = all.filter(function (x) { return me.sphere && x.p.s === me.sphere; })
+      .sort(function (a, b) { return (b.s + b.mutual) - (a.s + a.mutual); }).slice(0, 3);
+    col.forEach(function (x) { taken[x.p.id] = 1; });
+    var boost = all.filter(function (x) { return !taken[x.p.id]; })
+      .sort(function (a, b) { return (b.w + b.mutual) - (a.w + a.mutual) || b.s - a.s; }).slice(0, 3);
+    if (!col.length) col = boost.splice(0, 0);
+    return { colleagues: col, boost: boost };
+  }
+
+  function whyColleague(x, me) {
+    var p = x.p, f = first(p.n), label = DICT.spheres[p.s] ? DICT.spheres[p.s].label : "";
+    return f + " тоже работает в сфере «" + label + "». " + (p.f ? "Сама" : "Сам") + " ищет " + lowerFirst(p.l) + " — можно обменяться опытом и сделать проект вместе.";
+  }
+  function whyBoost(x, me) {
+    var p = x.p, f = first(p.n);
+    var need = me.need ? "Вам нужен человек для «" + me.need + "», а " : "";
+    return need + f + " — " + lowerFirst(p.r) + ". " + (p.f ? "Сама" : "Сам") + " ищет " + lowerFirst(p.l) + " — интерес взаимный.";
+  }
+  function face(p, size) {
+    var cls = size + " shrink-0 overflow-hidden rounded-full bg-paper";
+    return p.avatar
+      ? '<span class="' + cls + '"><img src="' + esc(p.avatar) + '" alt="" class="h-full w-full object-cover" onerror="this.replaceWith(document.createTextNode(\'' + esc(p.e) + '\'))"></span>'
+      : '<span class="' + cls + ' grid place-items-center text-2xl">' + esc(p.e) + "</span>";
+  }
+  function card(x, kind, me, i) {
+    var p = x.p, sc = score(x, i % 3);
+    return '<article class="box fade-up flex flex-col p-5" style="animation-delay:' + (i * 90) + 'ms">' +
+      '<div class="flex items-start gap-3">' + face(p, "h-16 w-16") +
+      '<div class="min-w-0 flex-1"><div class="text-lg font-bold leading-tight text-ink">' + esc(p.n) + '</div><div class="mt-0.5 text-sm text-mute">' + esc(p.r) + "</div></div></div>" +
+      '<div class="mt-4 flex items-center gap-3"><div class="h-2 flex-1 overflow-hidden rounded-full bg-paper"><div class="bar h-full rounded-full bg-brand" style="width:0" data-w="' + sc + '%"></div></div><span class="text-sm font-extrabold text-brand">' + sc + "%</span></div>" +
+      '<div class="mt-4 text-xs font-bold uppercase tracking-wider text-mute">Почему вам стоит познакомиться</div>' +
+      '<p class="mt-1.5 flex-1 text-[15px] leading-relaxed text-ink">' + esc(kind === "c" ? whyColleague(x, me) : whyBoost(x, me)) + "</p>" +
+      '<span class="mt-4 inline-flex w-fit items-center gap-1.5 rounded-full bg-[#E6F8F1] px-2.5 py-1 text-xs font-bold text-[#0B7A55]"><span class="h-1.5 w-1.5 rounded-full bg-match"></span>' + esc(p.st) + "</span>" +
+      '<button type="button" data-meet="' + p.id + '" class="btn-red mt-4 rounded-full px-4 py-3 text-sm font-bold">Познакомиться</button>' +
+      "</article>";
+  }
+
+  function setStep(n) {
+    document.querySelectorAll("#steps .step").forEach(function (el) {
+      var k = Number(el.getAttribute("data-step"));
+      el.classList.toggle("border-brand", k === n);
+      el.classList.toggle("text-brand", k === n);
+      el.querySelector(".num").className = "num grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs " + (k < n ? "bg-match text-white" : k === n ? "bg-brand text-white" : "bg-paper");
+      el.querySelector(".num").textContent = k < n ? "✓" : String(k);
+    });
+  }
+
+  function think(me, done) {
+    var label = me.sphere && DICT.spheres[me.sphere] ? DICT.spheres[me.sphere].label : "ваша сфера";
+    var lines = [
+      "Понимаю, кто вы: <b class=\"text-ink\">" + esc(me.about) + "</b> · сфера «" + esc(label) + "»",
+      me.need ? "Ищу, кто нужен проекту: <b class=\"text-ink\">" + esc(me.need) + "</b>" : "Ищу коллег и людей, которые усилят ваш проект",
+      "Отбираю тех, кто сам ищет таких, как вы, и считаю совпадение"
+    ];
+    var ul = document.getElementById("thinkList");
+    ul.innerHTML = "";
+    document.getElementById("thinking").classList.remove("hidden");
+    document.getElementById("results").classList.add("hidden");
+    var i = 0;
+    (function next() {
+      if (i > 0) ul.lastElementChild.querySelector(".dot").outerHTML = '<span class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-match text-xs text-white">✓</span>';
+      if (i === lines.length) { setTimeout(done, 350); return; }
+      setStep(i + 1 > 3 ? 3 : i + 1);
+      ul.insertAdjacentHTML("beforeend", '<li class="fade-up flex items-start gap-3"><span class="dot mt-0.5 h-6 w-6 shrink-0 animate-pulse rounded-full bg-brand-soft"></span><span>' + lines[i] + "</span></li>");
+      i++;
+      setTimeout(next, 700);
+    })();
+  }
+
+  function show(me) {
+    var res = pick(me);
+    res.colleagues.forEach(function (x) { x.kind = "c"; }); res.boost.forEach(function (x) { x.kind = "b"; });
+    current = { me: me, list: res.colleagues.concat(res.boost) };
+    var label = me.sphere && DICT.spheres[me.sphere] ? DICT.spheres[me.sphere].label : "";
+    document.getElementById("profile").innerHTML =
+      '<span class="text-mute">Ваш профиль:</span>' +
+      '<span class="rounded-full bg-paper px-3 py-1.5 font-semibold text-ink">' + esc(me.about) + "</span>" +
+      (label ? '<span class="rounded-full bg-paper px-3 py-1.5 font-semibold text-ink">' + esc(label) + "</span>" : "") +
+      (me.need ? '<span class="rounded-full bg-brand-soft px-3 py-1.5 font-semibold text-brand">Ищу: ' + esc(me.need) + "</span>" : "");
+    document.getElementById("colleagues").innerHTML = res.colleagues.length
+      ? res.colleagues.map(function (x, i) { return card(x, "c", me, i); }).join("")
+      : '<p class="text-mute">В демо-базе пока нет коллег из вашей сферы — в боте ИИ предложит типаж специалиста.</p>';
+    document.getElementById("boost").innerHTML = res.boost.map(function (x, i) { return card(x, "b", me, i + 3); }).join("");
+    document.getElementById("thinking").classList.add("hidden");
+    document.getElementById("results").classList.remove("hidden");
+    setStep(3);
+    lucide.createIcons();
+    requestAnimationFrame(function () {
+      document.querySelectorAll(".bar").forEach(function (b) { b.style.width = b.getAttribute("data-w"); });
+    });
+    aiComment(me, res);
+  }
+
+  // Комментарий настоящего ИИ, если сервер доступен (из РФ без VPN — просто не показываем)
+  function aiComment(me, res) {
+    var box = document.getElementById("aiNote");
+    box.classList.add("hidden");
+    var names = res.colleagues.concat(res.boost).map(function (x) { return x.p.n; }).join(", ");
+    var ctrl = window.AbortController ? new AbortController() : null;
+    var to = setTimeout(function () { if (ctrl) ctrl.abort(); }, 15000);
+    fetch(AGENT_URL, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ messages: [{ role: "user", content: "Я: " + me.about + (me.need ? ". Ищу: " + me.need : "") + ". Мне подобрали: " + names + ". Коротко, в 2 предложениях: с кого начать знакомство и почему?" }] }),
+      signal: ctrl ? ctrl.signal : undefined
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      if (!d || !d.reply) return;
+      box.innerHTML = '<div class="mb-1 flex items-center gap-2 text-sm font-bold text-brand"><i data-lucide="sparkles" class="h-4 w-4"></i>Совет ИИ-агента</div>' + esc(d.reply).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/\n/g, "<br>");
+      box.classList.remove("hidden");
+      lucide.createIcons();
+    }).catch(function () {}).then(function () { clearTimeout(to); });
+  }
+
+  function openInvite(id) {
+    var x = current.list.filter(function (y) { return y.p.id === id; })[0];
+    if (!x) return;
+    var p = x.p, me = current.me, f = first(p.n);
+    document.getElementById("inviteWho").innerHTML = face(p, "h-14 w-14") + '<div><div class="text-lg font-bold text-ink">' + esc(p.n) + '</div><div class="text-sm text-mute">' + esc(p.r) + "</div></div>";
+    document.getElementById("inviteText").textContent =
+      x.kind === "c"
+        ? "Здравствуйте, " + f + "! Я ИИ-ассистент TenChat. Нашёл вашего коллегу: " + lowerFirst(me.about) + ". Вы ищете " + lowerFirst(p.l) + " — можно обменяться опытом и сделать что-то вместе. Познакомить вас?"
+        : "Здравствуйте, " + f + "! Я ИИ-ассистент TenChat. Нашёл человека, которому вы можете быть полезны: " + lowerFirst(me.about) + "." +
+          (me.need ? " Этот человек ищет " + lowerFirst(me.need) + ", а вы сами ищете " + lowerFirst(p.l) + "." : " Вы сами ищете " + lowerFirst(p.l) + " — похоже, вы друг другу подходите.") +
+          " Познакомить вас?";
+    setStep(4);
+    var m = document.getElementById("invite");
+    m.classList.remove("hidden"); m.classList.add("flex");
+    lucide.createIcons();
+  }
+  function closeInvite() {
+    var m = document.getElementById("invite");
+    m.classList.add("hidden"); m.classList.remove("flex");
+    setStep(3);
+  }
+
+  function run(q) {
+    q = (q || "").trim();
+    if (!q) return;
+    document.getElementById("q").value = q;
+    try { history.replaceState(null, "", "?q=" + encodeURIComponent(q)); } catch (e) {}
+    var me = parse(q);
+    think(me, function () { show(me); });
+  }
+
+  document.getElementById("qForm").addEventListener("submit", function (e) { e.preventDefault(); run(document.getElementById("q").value || document.getElementById("q").placeholder); });
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-meet]");
+    if (b) openInvite(Number(b.getAttribute("data-meet")));
+  });
+  document.getElementById("inviteClose").addEventListener("click", closeInvite);
+  document.getElementById("inviteOther").addEventListener("click", closeInvite);
+  document.getElementById("invite").addEventListener("click", function (e) { if (e.target.id === "invite") closeInvite(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeInvite(); });
+
+  setStep(1);
+  fetch("people.json?v=avatars-100-20261022").then(function (r) { return r.json(); }).then(function (d) {
+    data = d;
+    var q = new URLSearchParams(location.search).get("q");
+    if (q) run(q); else document.getElementById("q").focus();
+  });
+  lucide.createIcons();
+</script>
+
+</body>
+</html>

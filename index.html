@@ -5,9 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tenchat2035 · ИИ-знакомства по делу</title>
 <meta name="description" content="ИИ-функция TenChat 2035 для деловых знакомств: ИИ сам находит людей по вашим целям, объясняет взаимную выгоду и пишет первым. Кейс №1, ИИ-хакатон МЭШ 2026.">
-<link rel="icon" type="image/png" href="logo-icon-red.png">
-<link rel="apple-touch-icon" href="logo-icon-red.png">
-<meta property="og:image" content="logo-full-red.jpg">
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<link rel="alternate icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="logo-icon-new.png">
+<meta property="og:image" content="logo-icon-new.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -62,15 +63,13 @@
   @keyframes blink { 0%, 80%, 100% { opacity: .25; } 40% { opacity: 1; } }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .fade-swap, .teaser, .animate-ping2 { animation: none !important; } }
 </style>
-<link rel="stylesheet" href="iphone-demo.css?v=20261023-1">
-<script src="iphone-demo.js?v=20261023-1" defer></script>
 </head>
 <body class="font-sans antialiased overflow-x-hidden">
 
 <header class="sticky top-0 z-50 border-b border-line bg-white/90 backdrop-blur">
   <div class="mx-auto flex h-[72px] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
     <a href="#top" class="flex items-center gap-2.5">
-      <img src="logo-icon-red.png" alt="" width="40" height="40" class="h-10 w-10 rounded-xl">
+      <img src="logo.svg" alt="" width="40" height="40" class="h-10 w-10 rounded-xl">
       <span class="text-[20px] font-extrabold tracking-tight text-ink sm:text-[22px]">Tenchat<span class="text-brand">2035</span></span>
     </a>
     <nav class="hidden items-center gap-8 text-[15px] font-medium text-ink lg:flex">
@@ -111,80 +110,17 @@
 </section>
 
 <!-- КАК РАБОТАЕТ -->
-<section id="how" aria-label="Как это работает">
-<div id="tc-phone-demo" data-step="2" data-playing="false">
-  <section class="tc-section" aria-label="Как это работает">
-    <div class="tc-copy">
-      <div class="tc-eyebrow">Как это работает</div>
-      <h2>Нужный человек.<br><span>В нужный момент.</span></h2>
-      <p class="tc-subtitle">Расскажите о цели. ИИ найдёт, с кем её реализовать.</p>
-      <nav class="tc-steps" aria-label="Этапы демонстрации">
-        <button type="button" class="tc-step" data-step-button="0"><span class="tc-step-number">01</span><span>Ваша идея</span></button>
-        <button type="button" class="tc-step" data-step-button="1"><span class="tc-step-number">02</span><span>Кого ищем</span></button>
-        <button type="button" class="tc-step" data-step-button="2" aria-current="step"><span class="tc-step-number">03</span><span>Взаимная польза</span></button>
-        <button type="button" class="tc-step" data-step-button="3"><span class="tc-step-number">04</span><span>Первый контакт</span></button>
-      </nav>
-      <div class="tc-actions">
-        <button type="button" class="tc-play" data-play><i data-lucide="play" aria-hidden="true"></i><span>Смотреть демо</span></button>
-        <span class="tc-duration">15 секунд</span>
-      </div>
+<section id="how" class="bg-paper py-16">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6">
+    <h2 class="text-3xl font-extrabold tracking-tight text-ink sm:text-[42px]">Как это работает</h2>
+    <p class="mt-3 max-w-2xl text-lg text-mute">Четыре шага от рассказа о себе до знакомства — около трёх минут.</p>
+    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <article class="box p-6"><div class="text-4xl font-extrabold text-brand">01</div><h3 class="mt-4 text-lg font-bold text-ink">Кто я</h3><p class="mt-2 text-mute">Одно сообщение о себе и своём проекте. ИИ задаст пару уточняющих вопросов.</p></article>
+      <article class="box p-6"><div class="text-4xl font-extrabold text-brand">02</div><h3 class="mt-4 text-lg font-bold text-ink">Кого хочу найти</h3><p class="mt-2 text-mute">Коллеги по профессии и люди, которые усилят проект, — те, кто сам ищет таких, как вы.</p></article>
+      <article class="box p-6"><div class="text-4xl font-extrabold text-brand">03</div><h3 class="mt-4 text-lg font-bold text-ink">Почему знакомиться</h3><p class="mt-2 text-mute">Процент совпадения и конкретная польза для обоих.</p></article>
+      <article class="box p-6"><div class="text-4xl font-extrabold text-brand">04</div><h3 class="mt-4 text-lg font-bold text-ink">ИИ пишет первым</h3><p class="mt-2 text-mute">Согласны оба — открываются контакты и план проекта. Отказ вы не увидите.</p></article>
     </div>
-    <div class="tc-stage" aria-label="Пример сайта на iPhone">
-      <div class="tc-glow" aria-hidden="true"></div>
-      <div class="tc-orbit" aria-hidden="true"></div>
-      <div class="tc-phone">
-        <div class="tc-screen">
-          <div class="tc-status" aria-hidden="true"><span>9:41</span><div class="tc-island"></div><span class="tc-system-icons"><i data-lucide="signal"></i><i data-lucide="wifi"></i><i data-lucide="battery-full"></i></span></div>
-          <div class="tc-address"><i data-lucide="lock-keyhole" aria-hidden="true"></i>tenchat2035.github.io</div>
-          <div class="tc-app-head"><img class="tc-brand" width="32" height="32" loading="lazy" decoding="async" src="logo-icon-red.png" alt=""><div><div class="tc-app-name">Tenchat2035</div><div class="tc-app-sub">ИИ-знакомства по делу</div></div><span class="tc-app-demo">ДЕМО</span></div>
-          <div class="tc-story">
-            <div class="tc-panel" data-panel="0" inert aria-hidden="true">
-              <p class="tc-tiny-label">ВАША ИДЕЯ</p>
-              <div class="tc-bubble">Расскажите о себе и о том, что хотите создать.</div>
-              <div class="tc-bubble tc-bubble-user"><span data-typewriter>Я учитель физики. Хочу открыть кружок робототехники.</span><span class="tc-message-meta">9:41 · Вы</span></div>
-              <div class="tc-typing" aria-label="ИИ готовит ответ"><span></span><span></span><span></span></div>
-            </div>
-            <div class="tc-panel" data-panel="1" inert aria-hidden="true">
-              <p class="tc-tiny-label">КОГО ИЩЕМ</p>
-              <div class="tc-bubble tc-bubble-user">Нужна школа, где можно проводить занятия.</div>
-              <div class="tc-match">
-                <p class="tc-match-label"><i data-lucide="sparkles" aria-hidden="true"></i>Подходит под вашу цель</p>
-                <div class="tc-person"><img class="tc-avatar" width="46" height="46" loading="lazy" decoding="async" src="avatars/person-069.jpg" alt="Аватар Светланы Орловой"><div><div class="tc-person-name">Светлана Орлова</div><div class="tc-person-role">Директор школы</div></div></div>
-                <p class="tc-match-copy">Ищет новые образовательные проекты для школы.</p>
-                <button type="button" class="tc-screen-button tc-pale-button" data-next="2">Почему стоит познакомиться<i data-lucide="arrow-right" aria-hidden="true"></i></button>
-              </div>
-            </div>
-            <div class="tc-panel is-active" data-panel="2" aria-hidden="false">
-              <p class="tc-tiny-label">ПОЧЕМУ ВЫ ПОДХОДИТЕ</p>
-              <div class="tc-match">
-                <div class="tc-person"><img class="tc-avatar" width="46" height="46" loading="lazy" decoding="async" src="avatars/person-069.jpg" alt="Аватар Светланы Орловой"><div><div class="tc-person-name">Светлана Орлова</div><div class="tc-person-role">Директор школы</div></div></div>
-                <div class="tc-benefit"><i data-lucide="graduation-cap" aria-hidden="true"></i><div><strong>Вы</strong>Программа и занятия<br>по робототехнике</div></div>
-                <div class="tc-benefit"><i data-lucide="school" aria-hidden="true"></i><div><strong>Школа</strong>Площадка и ученики<br>для нового кружка</div></div>
-                <button type="button" class="tc-screen-button" data-next="3">Познакомиться через бота<i data-lucide="arrow-up-right" aria-hidden="true"></i></button>
-              </div>
-            </div>
-            <div class="tc-panel" data-panel="3" inert aria-hidden="true">
-              <p class="tc-tiny-label">ПРОДОЛЖЕНИЕ В TELEGRAM</p>
-              <div class="tc-match">
-                <p class="tc-match-label"><i data-lucide="send" aria-hidden="true"></i>Черновик приглашения</p>
-                <div class="tc-person"><img class="tc-avatar" width="46" height="46" loading="lazy" decoding="async" src="avatars/person-069.jpg" alt="Аватар Светланы Орловой"><div><div class="tc-person-name">Светлане Орловой</div><div class="tc-person-role">От вашего ИИ-помощника</div></div></div>
-                <p class="tc-match-copy">Есть преподаватель физики с идеей кружка робототехники. Обсудим запуск занятий в вашей школе?</p>
-              </div>
-              <div class="tc-confirm"><i data-lucide="shield-check" aria-hidden="true"></i>Отправка — после вашего согласия</div>
-              <button type="button" class="tc-screen-button" data-replay>Посмотреть сначала<i data-lucide="rotate-ccw" aria-hidden="true"></i></button>
-              <p class="tc-caption">Пример сценария · сообщения не отправляются</p>
-            </div>
-          </div>
-          <div class="tc-composer" aria-hidden="true"><div class="tc-composer-text">Расскажите о своей цели…</div><span class="tc-send"><i data-lucide="arrow-up"></i></span></div>
-          <div class="tc-home-bar" aria-hidden="true"></div>
-        </div>
-      </div>
-      <div class="tc-floating"><i data-lucide="sparkles" aria-hidden="true"></i><span>Знакомство начинается с пользы</span></div>
-    </div>
-    <div class="tc-progress" aria-hidden="true"><span></span></div>
-    <div class="tc-accessible" aria-live="polite" data-announcement></div>
-  </section>
-</div>
+  </div>
 </section>
 
 <!-- ЛЮДИ -->
@@ -256,14 +192,14 @@
   </div>
   <button type="button" data-open-agent aria-label="Открыть ИИ-агента" class="avatar relative grid h-16 w-16 shrink-0 place-items-center rounded-full bg-brand p-[3px] shadow-xl shadow-brand/40 transition hover:scale-105">
     <span aria-hidden="true" class="absolute inset-0 rounded-full bg-aqua/40 animate-ping2"></span>
-    <img src="logo-icon-red.png" alt="" width="56" height="56" class="relative h-full w-full rounded-full bg-white object-contain p-2">
+    <img src="logo.svg" alt="" width="56" height="56" class="relative h-full w-full rounded-full bg-white object-contain p-2">
     <span class="absolute bottom-0.5 right-0.5 h-4 w-4 rounded-full border-[3px] border-white bg-match"></span>
   </button>
 </div>
 <div id="agentBackdrop" class="fixed inset-0 z-[65] hidden bg-ink/30 backdrop-blur-[2px]" aria-hidden="true"></div>
 <section id="agentPanel" class="closed fixed inset-0 z-[70] flex flex-col overflow-hidden bg-white shadow-2xl shadow-ink/30 sm:inset-auto sm:bottom-4 sm:right-4 sm:top-4 sm:w-[min(50vw,760px)] sm:min-w-[440px] sm:rounded-[28px] sm:border sm:border-line" role="dialog" aria-label="ИИ-агент Tenchat2035" aria-hidden="true">
   <header class="flex items-center gap-3 bg-brand px-4 py-3 text-white">
-    <img src="logo-icon-red.png" alt="" width="40" height="40" class="h-10 w-10 rounded-full bg-white object-contain p-1">
+    <img src="logo.svg" alt="" width="40" height="40" class="h-10 w-10 rounded-full bg-white object-contain p-1">
     <div class="min-w-0 flex-1 leading-tight">
       <div class="font-display font-extrabold">ИИ-агент Tenchat2035</div>
       <div class="flex items-center gap-1.5 text-xs text-white/85"><span class="h-1.5 w-1.5 rounded-full bg-white"></span>Подберёт людей и ответит о проекте</div>
@@ -372,12 +308,11 @@
     }, 3500);
   }
 
-  // Строка «Расскажи о себе» → ИИ-агент сразу ищет людей
+  // Строка «Расскажи о себе» → страница подбора кандидатов
   document.getElementById("heroForm").addEventListener("submit", function (e) {
     e.preventDefault();
     var v = document.getElementById("heroInput").value.trim() || document.getElementById("heroInput").placeholder;
-    openAgent();
-    ask(v);
+    location.href = "match.html?q=" + encodeURIComponent(v);
   });
 
   // ---------- ИИ-агент (Claude через воркер бота) ----------
