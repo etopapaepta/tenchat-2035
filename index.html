@@ -49,7 +49,7 @@
   .rail { scroll-snap-type: x mandatory; scrollbar-width: none; }
   .rail::-webkit-scrollbar { display: none; }
   .rail > * { scroll-snap-align: start; }
-  .pcard { background: radial-gradient(120% 80% at 50% 0%, #3A3F4D 0%, #1F2433 60%, #151821 100%); }
+  .pcard { background: #FFFFFF; border: 2px solid #EB2A2A; }
   .fade-swap { animation: fadeSwap .4s ease both; }
   @keyframes fadeSwap { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
   #agentPanel { transition: opacity .2s ease, transform .2s ease; }
@@ -327,11 +327,11 @@
     return "?ask=" + encodeURIComponent("Хочу познакомиться: " + p.n + " — " + p.r + ". Чем мы можем быть полезны друг другу?");
   }
   function heroCard(p) {
-    return '<article class="pcard relative flex h-[420px] w-[280px] shrink-0 flex-col justify-end overflow-hidden rounded-[28px] p-6 text-white sm:w-[300px]">' +
-      '<span class="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-xs font-bold text-ink"><span class="h-2 w-2 rounded-full bg-match"></span>' + esc(p.st) + "</span>" +
+    return '<article class="pcard relative flex h-[420px] w-[280px] shrink-0 flex-col justify-end overflow-hidden rounded-[28px] p-6 text-ink sm:w-[300px]">' +
+      '<span class="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1.5 text-xs font-bold text-ink"><span class="h-2 w-2 rounded-full bg-match"></span>' + esc(p.st) + "</span>" +
       '<div class="absolute inset-x-0 top-16 flex justify-center">' + face(p, "h-36 w-36 rounded-full text-7xl") + "</div>" +
-      '<div class="relative"><div class="text-2xl font-bold leading-tight">' + esc(p.n) + '</div><div class="mt-1 text-[15px] text-white/75">' + esc(p.r) + "</div></div>" +
-      '<a href="' + askLink(p) + '" aria-label="Познакомиться через ИИ" class="relative mt-5 grid h-12 w-12 place-items-center self-end rounded-full bg-white/15 hover:bg-brand"><i data-lucide="arrow-up-right" class="h-5 w-5"></i></a>' +
+      '<div class="relative"><div class="text-2xl font-bold leading-tight">' + esc(p.n) + '</div><div class="mt-1 text-[15px] text-mute">' + esc(p.r) + "</div></div>" +
+      '<a href="' + askLink(p) + '" aria-label="Познакомиться через ИИ" class="relative mt-5 grid h-12 w-12 place-items-center self-end rounded-full border border-brand/20 bg-brand-soft text-brand transition-colors hover:bg-brand hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"><i data-lucide="arrow-up-right" class="h-5 w-5"></i></a>' +
       "</article>";
   }
   function gridCard(p) {
